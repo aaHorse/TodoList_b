@@ -13,7 +13,7 @@ import com.example.zexiger.todolist_b.R;;
 
 public class ItemInit {
     private static List<Item> list=new ArrayList<>();
-    public static void initItems(View view, Context context){
+    public static void initItems(View view, final Context context){
         for(int i=1;i<11;i++){
             Item item=new Item();
             item.setName(""+i);

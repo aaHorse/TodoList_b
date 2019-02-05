@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.zexiger.todolist_b.floating_action_button.Fab_add;
 import com.example.zexiger.todolist_b.recyclerview.ItemInit;
 
 
@@ -27,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         View cv = getWindow().getDecorView();
-        Context context=getApplicationContext();
+        final Context context=getApplicationContext();
+
         ItemInit.initItems(cv,context);
+        Fab_add.add(cv,context);
     }
 
     @Override
