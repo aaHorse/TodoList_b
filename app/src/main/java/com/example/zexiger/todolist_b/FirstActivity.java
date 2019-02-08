@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import org.litepal.LitePal;
+
 public class FirstActivity extends AppCompatActivity {
     private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
+        setContentView(R.layout.activity_layout);
+
+        //创建LitePal_general数据库
+        LitePal.getDatabase();
 
         button=(Button)findViewById(R.id.btn_login);
         button.setOnClickListener(new View.OnClickListener() {

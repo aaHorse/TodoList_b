@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<litepal>
+    <dbname value="user"/>
+    <version value="1"/>
+    <list>
+        <mapping class="com.example.zexiger.todolist_b.LitePal_general"/>
+    </list>
+</litepal>
