@@ -1,8 +1,9 @@
 package com.example.zexiger.todolist_b.LitePal_general;
 
-public class Users {
+import org.litepal.crud.DataSupport;
+
+public class Contents extends DataSupport {
     private String id;//用户唯一身份id
-    private String name;//用户昵称
     //用户的密码不在这里存储，用另一个加密的SharedPreferences存
     private String content;//user存进来的内容
     private String date;//content最后一次编辑的日期，年月日
@@ -16,14 +17,6 @@ public class Users {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getContent() {

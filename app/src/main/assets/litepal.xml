@@ -3,6 +3,6 @@
     <dbname value="user"/>
     <version value="1"/>
     <list>
-        <mapping class="com.example.zexiger.todolist_b.LitePal_general"/>
+        <mapping class="com.example.zexiger.todolist_b.LitePal_general.Contents"/>
     </list>
 </litepal>
