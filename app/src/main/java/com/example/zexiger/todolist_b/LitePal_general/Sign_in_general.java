@@ -19,9 +19,8 @@ public class Sign_in_general {
     private static EditText text_password;//用户输入的密码
     public static  String right_id;//正确登录后，改id设置为public，访问或存单个content时，通过该id获得对应的数据
 
-    public Sign_in_general(){}
     /**
-     * Litepal数据库的普通登录功能实现（QQ登录在另一个数据库中实现）
+     * Litepal数据库的general登录功能实现，检查id和password是否对应，如果对应，跳转到main页面
      * */
     public static void sign_in(View view, final Context context){
         sign_in=(Button)view.findViewById(R.id.btn_login);

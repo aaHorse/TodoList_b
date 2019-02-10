@@ -1,4 +1,4 @@
-package com.example.zexiger.todolist_b.recyclerview;
+package com.example.zexiger.todolist_b.recyclerview_show;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,36 +13,37 @@ import com.example.zexiger.todolist_b.R;
 
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
-    private List<Item>itemList;
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+    private List<Contents> itemList;
+
+    public ItemAdapter(List<Contents>list){
+        this.itemList=list;
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView;
+        TextView textView_2;
         View listView;
         public ViewHolder(View view){
             super(view);
             listView=view;
-            textView=(TextView)view.findViewById(R.id.item_name);
+            textView=(TextView)view.findViewById(R.id.tv_content);
+            textView_2=(TextView)view.findViewById(R.id.tv_date);
         }
-    }
-
-    public ItemAdapter(List<Item> list){
-        this.itemList=list;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_layout,viewGroup,false);
+        View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.show_item_layout,viewGroup,false);
         final ViewHolder viewHolder=new ViewHolder(view);
         viewHolder.listView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position=viewHolder.getAdapterPosition();
                 switch(position){
-                    case 0:
-                        Toast.makeText(v.getContext(),""+1,Toast.LENGTH_SHORT).show();
-                        break;
+                    default:
+                        Toast.makeText(v.getContext(),"hahahahaha",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -51,8 +52,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Item item=itemList.get(i);
-        viewHolder.textView.setText(item.getName());
+        Contents item=itemList.get(i);
+        viewHolder.textView.setText(item.getContent());
+        viewHolder.textView_2.setText(item.getDate());
     }
 
     @Override

@@ -25,6 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LitePal_general.Add_content">
+
+        </activity>
+        <activity android:name=".LitePal_general.Create_user">
+
+        </activity>
 
 
         <!-- 注册SDKActivity -->
