@@ -58,7 +58,9 @@ public class Create_user extends AppCompatActivity {
      * */
     private void save_user(String name,String password){
         user=new Users(this,"Users.db",null,1);
+
         SQLiteDatabase db=user.getWritableDatabase();
+
         ContentValues values=new ContentValues();
         values.put("name_id","GG"+id);
         id++;

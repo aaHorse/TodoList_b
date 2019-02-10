@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         context=getApplicationContext();
 
         //创建LitePal数据库
-        LitePal.getDatabase();
+        //LitePal.getDatabase();
 
         com.example.zexiger.todolist_b.recyclerview.ItemInit.initItems(cv,context);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,2);
             }
         });
-        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context);
+     //   com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context);
     }
 
     @Override
@@ -74,8 +74,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context);
-        /**
-         * 需要先建立数据库，才能进行数据库操作
-         * */
     }
 }

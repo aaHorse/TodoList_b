@@ -14,8 +14,11 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.litepal.crud.DataSupport.findAll;
+import static org.litepal.crud.DataSupport.findFirst;
+
 public class ItemInit {
-    private static List<Contents> list = new ArrayList<>();
+    private static List<Contents> list;
 
     /*
     * 进行数据库查找，按level顺序排到list中
@@ -23,14 +26,15 @@ public class ItemInit {
     * */
     public static void initItems(View view, final Context context) {
         //查询数据库中，Contents表的所有数据，这里先测试，待完善
-        list=DataSupport.findAll(Contents.class);
-
-        Log.d("ttt",list.size()+" ");
+        List<Contents>mylist=findAll(Contents.class);
+        for(Contents contents:mylist){
+            Log.d("ttttt",contents.getId()+"dao");
+        }
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_show);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        ItemAdapter adapter = new ItemAdapter(list);
+        ItemAdapter adapter = new ItemAdapter(mylist);
         recyclerView.setAdapter(adapter);
     }
 }
