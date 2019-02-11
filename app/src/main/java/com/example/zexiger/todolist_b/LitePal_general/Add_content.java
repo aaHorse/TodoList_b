@@ -41,31 +41,15 @@ public class Add_content extends AppCompatActivity {
                 String content_text=editText.getText().toString();
 
                 Contents user=new Contents();
-                user.setId("111");
- /*               user.setId_string("1");
-                user.setContent(content_text);
+
+                user.setId_string("1");
+                user.setContent_text(content_text);
                 user.setDate("2019年2月8日");
                 user.setTime("22时10分");
-                user.setLevel(1);
-                user.setDone(false);*/
+                user.setLevel((int) 1);
+                user.setDone(false);
+
                 user.save();
-
-                Contents user2=new Contents();
-                user.setId("222");
-/*                user2.setId_string("2");
-                user2.setContent(content_text);
-                user2.setDate("2019年2月8日");
-                user2.setTime("22时10分");
-                user2.setLevel(1);
-                user2.setDone(false);*/
-                user2.save();
-
-
-                List<Contents>list=findAll(Contents.class);
-                Log.d("ttttt","数据库里面的content个数"+list.size());
-                for(Contents obj:list){
-                    Log.d("ttttt","数据库里面的内容"+obj.getId());
-                }
 
                 //完成编辑之后，跳回主界面
                 Intent intent=new Intent();

@@ -53,11 +53,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Contents item=itemList.get(i);
-/*        viewHolder.textView.setText(item.getContent());
-        viewHolder.textView_2.setText(item.getDate());*/
-
-        viewHolder.textView.setText(item.getId());
-        viewHolder.textView_2.setText(item.getId());
+        viewHolder.textView.setText(item.getContent_text());
+        viewHolder.textView_2.setText(item.getDate());
     }
 
     @Override
