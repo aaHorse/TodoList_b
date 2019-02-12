@@ -5,9 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class Users extends SQLiteOpenHelper {
+
+    //在建表时，id作为主键，不需要程序员初始化，否则违反对用户无意义原则
     public static final String User_String="create table User ("
             +"id integer primary key autoincrement,"
-            +"name_id text,"
+            +"user_id text,"
             +"name text,"
             +"password text )";
 

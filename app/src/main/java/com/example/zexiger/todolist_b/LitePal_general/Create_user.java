@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.zexiger.todolist_b.FirstActivity;
 import com.example.zexiger.todolist_b.MainActivity;
 import com.example.zexiger.todolist_b.R;
 import com.example.zexiger.todolist_b.SQLite_User.Users;
@@ -44,7 +45,7 @@ public class Create_user extends AppCompatActivity {
                 String password_string_2=editText_3.getText().toString();
                 if(password_string.equals(password_string_2)){
                     save_user(name_string,password_string);//成功注册，进行保存
-                    Intent intent=new Intent(Create_user.this,MainActivity.class);
+                    Intent intent=new Intent(Create_user.this,FirstActivity.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(Create_user.this,"两次密码不符",Toast.LENGTH_SHORT).show();
@@ -57,12 +58,12 @@ public class Create_user extends AppCompatActivity {
      * 使用SQLite数据库存储用户的账号和密码，注：对于每一条item，使用的是LitePal存储
      * */
     private void save_user(String name,String password){
-        user=new Users(this,"Users.db",null,1);
+        user=new Users(this,"users.db",null,1);
 
         SQLiteDatabase db=user.getWritableDatabase();
 
         ContentValues values=new ContentValues();
-        values.put("name_id","GG"+id);
+        values.put("user_id","GG"+id);
         id++;
         values.put("name",name);
         values.put("password",password);
