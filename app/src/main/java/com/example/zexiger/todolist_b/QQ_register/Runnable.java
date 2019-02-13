@@ -1,4 +1,6 @@
+/*
 package com.example.zexiger.todolist_b.QQ_register;
+*/
 /*
  * Copyright (c) 1994, 2013, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -22,9 +24,11 @@ package com.example.zexiger.todolist_b.QQ_register;
  * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
  * or visit www.oracle.com if you need additional information or have any
  * questions.
- */
+ *//*
 
 
+
+*/
 /**
  * The <code>Runnable</code> interface should be implemented by any
  * class whose instances are intended to be executed by a thread. The
@@ -51,10 +55,12 @@ package com.example.zexiger.todolist_b.QQ_register;
  * @see     java.lang.Thread
  * @see     java.util.concurrent.Callable
  * @since   JDK1.0
- */
+ *//*
+
 @FunctionalInterface
 public interface Runnable {
-    /**
+    */
+/**
      * When an object implementing interface <code>Runnable</code> is used
      * to create a thread, starting the thread causes the object's
      * <code>run</code> method to be called in that separately executing
@@ -64,6 +70,8 @@ public interface Runnable {
      * take any action whatsoever.
      *
      * @see     java.lang.Thread#run()
-     */
+     *//*
+
     public abstract void run();
 }
+*/

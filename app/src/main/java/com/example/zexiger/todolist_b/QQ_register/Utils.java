@@ -1,3 +1,4 @@
+/*
 package com.example.zexiger.todolist_b.QQ_register;
 
 import android.graphics.Bitmap;
@@ -35,3 +36,4 @@ public class Utils {
 }
 
 
+*/

@@ -1,3 +1,22 @@
+
+
+
+
+
+
+/*
+* 用碎片实现QQ第三方登录出现不能解决的问题
+* 改用在FirstActivity中实现第三方登录
+*
+* */
+
+
+
+
+
+
+
+/*
 package com.example.zexiger.todolist_b.QQ_register;
 
 import android.content.Intent;
@@ -13,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,44 +48,46 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class QQ_Fragment extends Fragment {
-    private static final String TAG = "TAG";
     private static final String APP_ID = "1108179346";//官方获取的APPID
     private Tencent mTencent;
     private BaseUiListener mIUiListener;
     private UserInfo mUserInfo;
-    private Button button;
+    private ImageButton button;
 
-    private ImageView iv_head;
+    //private ImageView iv_head;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.register,container,false);
-   //     button=(Button)view.findViewById(R.id.button_QQ);
+        button=(ImageButton) view.findViewById(R.id.ib_QQ);
  //       iv_head=(ImageView)view.findViewById(R.id.iv_head);
         //传入参数APPID和全局Context上下文
         mTencent = Tencent.createInstance(APP_ID,getActivity().getApplicationContext());
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mIUiListener = new BaseUiListener();
-//                //all表示获取所有权限
-//                mTencent.login(getActivity(),"all", mIUiListener);
-//            }
-//        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIUiListener = new BaseUiListener();
+                //all表示获取所有权限
+                mTencent.login(getActivity(),"all", mIUiListener);
+                Log.d("ttttt","hhhhhhh1");
+            }
+        });
         return view;
     }
 
-    /**
+    */
+/**
      * 自定义监听器实现IUiListener接口后，需要实现的3个方法
      * onComplete完成 onError错误 onCancel取消
-     */
+     *//*
+
     private class BaseUiListener implements IUiListener {
 
         @Override
         public void onComplete(Object response) {
             Toast.makeText(getActivity(), "授权成功", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "response:" + response);
+            Log.d("ttttt", "response:" + response);
             JSONObject obj = (JSONObject) response;
             try {
                 final String openID = obj.getString("openid");
@@ -78,7 +100,7 @@ public class QQ_Fragment extends Fragment {
                 mUserInfo.getUserInfo(new IUiListener() {
                     @Override
                     public void onComplete(Object response) {
-                        Log.e(TAG,"登录成功"+response.toString());
+                        Log.d("ttttt","登录成功"+response.toString());
 
                         JSONObject jsonObject=(JSONObject)response;
                         initOpenidAndToken(jsonObject);
@@ -108,16 +130,16 @@ public class QQ_Fragment extends Fragment {
 
                             ////获取昵称
                             if (msg.what == 0) {
-                                Log.e("hzq", "获取昵称--->" + (CharSequence) msg.obj);
+                                Log.d("ttttt", "获取昵称--->" + (CharSequence) msg.obj);
 
                             } else if (msg.what == 1) {
                                 //获取头像
-                                Log.e("hzq", "获取头像--->" + (Bitmap) msg.obj);
+                                Log.d("ttttt", "获取头像--->" + (Bitmap) msg.obj);
 
-                                iv_head.setImageBitmap((Bitmap) msg.obj);
+                                //iv_head.setImageBitmap((Bitmap) msg.obj);
                             } else if (msg.what == 2) {
                                 //获取省份
-                                Log.e("hzq", "获取省份--->" + msg.obj);
+                                Log.d("ttttt", "获取省份--->" + msg.obj);
                             }
                         }
                     };
@@ -133,7 +155,7 @@ public class QQ_Fragment extends Fragment {
                             public void onComplete(final Object o) {
                                 JSONObject userInfoJson = (JSONObject) o;
 
-                                Log.e("hzq", "userInfoJson-->" + userInfoJson.toString());
+                                Log.d("ttttt", "userInfoJson-->" + userInfoJson.toString());
                                 try {
                                     String nickname = userInfoJson.getString("nickname");//直接传递一个昵称的内容过去
                                     mHandler.obtainMessage(0, nickname).sendToTarget();
@@ -172,13 +194,13 @@ public class QQ_Fragment extends Fragment {
 
                             @Override
                             public void onError(UiError uiError) {
-                                Log.e("GET_QQ_INFO_ERROR", "获取qq用户信息错误");
+                                Log.d("ttttt", "获取qq用户信息错误");
                                 Toast.makeText(getActivity(), "获取qq用户信息错误", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCancel() {
-                                Log.e("GET_QQ_INFO_CANCEL", "获取qq用户信息取消");
+                                Log.d("ttttt", "获取qq用户信息取消");
                                 Toast.makeText(getActivity(), "获取qq用户信息取消", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -188,12 +210,12 @@ public class QQ_Fragment extends Fragment {
 
                     @Override
                     public void onError(UiError uiError) {
-                        Log.e(TAG,"登录失败"+uiError.toString());
+                        Log.d("ttttt","登录失败"+uiError.toString());
                     }
 
                     @Override
                     public void onCancel() {
-                        Log.e(TAG,"登录取消");
+                        Log.d("ttttt","登录取消");
 
                     }
                 });
@@ -216,17 +238,21 @@ public class QQ_Fragment extends Fragment {
 
     }
 
-    /**
+    */
+/**
      * 在调用Login的Activity或者Fragment中重写onActivityResult方法
      * @param requestCode
      * @param resultCode
      * @param data
-     */
+     *//*
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("ttttt","hhhhhhh2");
         if(requestCode == Constants.REQUEST_LOGIN){
             Tencent.onActivityResultData(requestCode,resultCode,data,mIUiListener);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
+*/
