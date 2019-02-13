@@ -3,17 +3,6 @@ package com.example.zexiger.todolist_b.LitePal_general;
 import org.litepal.crud.DataSupport;
 
 public class Contents extends DataSupport {
-/*    /////////////////////////////////
-    private String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-    ///////////////////////////////////////*/
 
     private String id_string;//用户唯一身份id,G+数字是general注册的id，QQ+数字是QQ注册的id
     //用户的密码不在这里存储，用另一个加密的SharedPreferences存

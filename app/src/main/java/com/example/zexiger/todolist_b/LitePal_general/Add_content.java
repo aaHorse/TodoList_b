@@ -22,7 +22,7 @@ import static org.litepal.crud.DataSupport.findAll;
 import static org.litepal.crud.DataSupport.findFirst;
 
 public class Add_content extends AppCompatActivity {
-    private String id=Sign_in_general.right_id;
+    private String id;
     private EditText editText;
     private Button button;
 
@@ -38,22 +38,25 @@ public class Add_content extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Intent intent=getIntent();
+                id=intent.getStringExtra("id");
+
                 String content_text=editText.getText().toString();
 
                 Contents user=new Contents();
 
-                user.setId_string("1");
+                user.setId_string(id);
                 user.setContent_text(content_text);
                 user.setDate("2019年2月8日");
                 user.setTime("22时10分");
-                user.setLevel((int) 1);
+                user.setLevel(1);
                 user.setDone(false);
 
                 user.save();
 
                 //完成编辑之后，跳回主界面
-                Intent intent=new Intent();
-                setResult(RESULT_OK,intent);
+                Intent intent_2=new Intent();
+                setResult(RESULT_OK,intent_2);
                 finish();
             }
         });
