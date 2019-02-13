@@ -12,6 +12,9 @@ import java.net.URL;
 
 public class Utils {
     public static String TAG="hzq";
+    /*
+    * 将腾讯返回的头像字符串转化为图片，并且返回给调用的函数
+    * */
     public static Bitmap getbitmap(String imageUri) {
         Log.v(TAG, "getbitmap:" + imageUri);
         // 显示网络上的图片

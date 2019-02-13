@@ -40,6 +40,7 @@ public class Sign_in_general {
                 if(checkInput(id,password,context)){
                     right_id=id;
                     Intent intent=new Intent(context,MainActivity.class);
+                    intent.putExtra("id",id);
                     context.startActivity(intent);
                 }else{
                     Toast.makeText(context, "账号或密码输入有误，请重新输入", Toast.LENGTH_SHORT).show();

@@ -28,11 +28,23 @@ public class MainActivity extends AppCompatActivity {
     View cv;
     Context context;
 
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent=getIntent();
+        id=intent.getStringExtra("id");
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Add_content.class);
+                intent.putExtra("id",id);
                 startActivityForResult(intent,2);
             }
         });
-     //   com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context);
+        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
     }
 
     @Override
@@ -73,6 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context);
+        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
     }
 }

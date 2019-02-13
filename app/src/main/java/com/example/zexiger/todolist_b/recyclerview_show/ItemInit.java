@@ -22,9 +22,10 @@ public class ItemInit {
     * 进行数据库查找，按level顺序排到list中
     *
     * */
-    public static void initItems(View view, final Context context) {
-        //查询数据库中，Contents表的所有数据，这里先测试，待完善
-        List<Contents>mylist=findAll(Contents.class);
+    public static void initItems(View view, final Context context,String id) {
+        //查询数据库中，Contents表的所有数据，这里先测试，待完善,
+        //该id用于查找当前用户的content
+        List<Contents>mylist=DataSupport.where("id_string = ?",id).find(Contents.class);
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_show);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
