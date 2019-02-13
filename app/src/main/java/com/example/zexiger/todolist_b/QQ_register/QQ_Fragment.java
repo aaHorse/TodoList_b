@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,26 +34,26 @@ public class QQ_Fragment extends Fragment {
     private Tencent mTencent;
     private BaseUiListener mIUiListener;
     private UserInfo mUserInfo;
-    private Button button;
+    private ImageButton button;
 
-    private ImageView iv_head;
+    //private ImageView iv_head;//QQ头像
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.register,container,false);
-   //     button=(Button)view.findViewById(R.id.button_QQ);
+        button=(ImageButton)view.findViewById(R.id.ib_QQ);
  //       iv_head=(ImageView)view.findViewById(R.id.iv_head);
         //传入参数APPID和全局Context上下文
         mTencent = Tencent.createInstance(APP_ID,getActivity().getApplicationContext());
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mIUiListener = new BaseUiListener();
-//                //all表示获取所有权限
-//                mTencent.login(getActivity(),"all", mIUiListener);
-//            }
-//        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIUiListener = new BaseUiListener();
+                //all表示获取所有权限
+                mTencent.login(getActivity(),"all", mIUiListener);
+            }
+        });
         return view;
     }
 
@@ -62,15 +63,19 @@ public class QQ_Fragment extends Fragment {
      */
     private class BaseUiListener implements IUiListener {
 
+        /**
+         * 授权完成
+         * */
         @Override
         public void onComplete(Object response) {
             Toast.makeText(getActivity(), "授权成功", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "response:" + response);
+            //Log.e(TAG, "response:" + response);
             JSONObject obj = (JSONObject) response;
             try {
                 final String openID = obj.getString("openid");
                 final String accessToken = obj.getString("access_token");
                 final String expires = obj.getString("expires_in");
+
                 mTencent.setOpenId(openID);
                 mTencent.setAccessToken(accessToken,expires);
                 QQToken qqToken = mTencent.getQQToken();
@@ -114,7 +119,7 @@ public class QQ_Fragment extends Fragment {
                                 //获取头像
                                 Log.e("hzq", "获取头像--->" + (Bitmap) msg.obj);
 
-                                iv_head.setImageBitmap((Bitmap) msg.obj);
+                                //iv_head.setImageBitmap((Bitmap) msg.obj);
                             } else if (msg.what == 2) {
                                 //获取省份
                                 Log.e("hzq", "获取省份--->" + msg.obj);
@@ -202,12 +207,18 @@ public class QQ_Fragment extends Fragment {
             }
         }
 
+        /**
+         * 授权过程出错
+         * */
         @Override
         public void onError(UiError uiError) {
             Toast.makeText(getActivity(), "授权失败", Toast.LENGTH_SHORT).show();
 
         }
 
+        /**
+         * 授权取消
+         * */
         @Override
         public void onCancel() {
             Toast.makeText(getActivity(), "授权取消", Toast.LENGTH_SHORT).show();
