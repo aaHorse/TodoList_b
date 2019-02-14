@@ -48,7 +48,6 @@ public class Add_content extends AppCompatActivity {
                 user.setId_string(id);
                 user.setContent_text(content_text);
                 user.setDate("2019年2月8日");
-                user.setTime("22时10分");
                 user.setLevel(1);
                 user.setDone(false);
 

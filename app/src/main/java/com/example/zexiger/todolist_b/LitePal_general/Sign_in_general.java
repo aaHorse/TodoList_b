@@ -2,8 +2,10 @@ package com.example.zexiger.todolist_b.LitePal_general;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,7 +27,7 @@ public class Sign_in_general {
     /**
      * Litepal数据库的general登录功能实现，检查id和password是否对应，如果对应，跳转到main页面
      * */
-    public static void sign_in(View view, final Context context){
+    public static void sign_in(final View view, final Context context){
         sign_in=(Button)view.findViewById(R.id.btn_login);
         checkBox=(CheckBox)view.findViewById(R.id.cb_checkbox);
         text_id=(EditText) view.findViewById(R.id.et_userName);
@@ -34,10 +36,18 @@ public class Sign_in_general {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //如果勾选了记住密码，在这里将信息进行存储
                 boolean isChecked=checkBox.isChecked();
+
+
                 String id=text_id.getText().toString();
                 String password=text_password.getText().toString();
                 if(checkInput(id,password,context)){
+
+                    if (isChecked){
+                        save(view,context);
+                    }
+
                     right_id=id;
                     Intent intent=new Intent(context,MainActivity.class);
                     intent.putExtra("id",id);
@@ -47,7 +57,6 @@ public class Sign_in_general {
                 }
             }
         });
-
     }
 
     /**
@@ -68,5 +77,41 @@ public class Sign_in_general {
             }while(cursor.moveToNext());
         }
         return false;
+    }
+
+    /**
+     * 如果选择了记住密码，
+     * 这里将界面显示出来
+     * */
+    public static void checkout_show(View view,Context context){
+        checkBox=(CheckBox)view.findViewById(R.id.cb_checkbox);
+        text_id=(EditText) view.findViewById(R.id.et_userName);
+        text_password=(EditText)view.findViewById(R.id.et_password);
+
+        SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(context);
+        String user_id=preferences.getString("user_id","404");
+        String user_name=preferences.getString("user_password","null");
+        text_id.setText(user_id);
+        text_password.setText(user_name);
+        checkBox.setChecked(true);
+    }
+
+    /*
+    * 对勾选了记住密码的用户进行信息存储
+    * */
+    public static void save(final View view,Context context){
+        text_id=(EditText) view.findViewById(R.id.et_userName);
+        text_password=(EditText)view.findViewById(R.id.et_password);
+
+        SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+
+        editor.clear();
+
+        editor.putBoolean("remember_password",true);
+        editor.putString("user_id",text_id.getText().toString());
+        editor.putString("user_password",text_password.getText().toString());
+
+        editor.apply();
     }
 }

@@ -27,10 +27,12 @@ public class ItemInit {
         //该id用于查找当前用户的content
         List<Contents>mylist=DataSupport.where("id_string = ?",id).find(Contents.class);
 
-        RecyclerView recyclerView = view.findViewById(R.id.rv_show);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(layoutManager);
-        ItemAdapter adapter = new ItemAdapter(mylist);
-        recyclerView.setAdapter(adapter);
+        if (mylist.size()!=0){
+            RecyclerView recyclerView = view.findViewById(R.id.rv_show);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(layoutManager);
+            ItemAdapter adapter = new ItemAdapter(mylist);
+            recyclerView.setAdapter(adapter);
+        }
     }
 }

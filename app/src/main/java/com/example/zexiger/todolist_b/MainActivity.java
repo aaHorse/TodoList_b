@@ -13,9 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zexiger.todolist_b.LitePal_general.Add_content;
+import com.example.zexiger.todolist_b.SQLite_User.Query;
 import com.example.zexiger.todolist_b.floating_action_button.Fab_add;
 
 import org.litepal.LitePal;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     View cv;
     Context context;
+
+    private TextView tv_name;
 
     private String id;
 
@@ -42,19 +46,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tv_name=(TextView)findViewById(R.id.id_name);
+        floatingActionButton = findViewById(R.id.floating_action_button);
 
         Intent intent=getIntent();
         id=intent.getStringExtra("id");
+
         Log.d("ttttt","id"+id);
+
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        floatingActionButton = findViewById(R.id.floating_action_button);
 
         cv = getWindow().getDecorView();
         context=getApplicationContext();
 
-        //创建LitePal数据库
-        //LitePal.getDatabase();
+        /*
+         * 在侧滑菜单设置用户名
+         * */
+        String name=Query.get_name(id,context);
+        tv_name.setText(name);
 
         com.example.zexiger.todolist_b.recyclerview.ItemInit.initItems(cv,context);
 
@@ -67,10 +77,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        * 这一行代码会使MainActivity闪退！！！！！！！！！！！！！！！！！！！
-        * */
-        //com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
+        //显示list界面
+        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
     }
 
     @Override

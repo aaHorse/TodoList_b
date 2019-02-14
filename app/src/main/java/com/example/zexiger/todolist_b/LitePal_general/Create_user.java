@@ -2,6 +2,7 @@ package com.example.zexiger.todolist_b.LitePal_general;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +17,13 @@ import com.example.zexiger.todolist_b.SQLite_User.Users;
 
 public class Create_user extends AppCompatActivity {
 
-    private static int id=1;//用户的id，采用顺序编排
+    /*
+    * 用户的id，采用顺序编排
+    * 在这里初始化为-100，在后面-100将会被覆盖
+    * 代码真正采用的id通过SharedPreferences文件进行存储
+    * general的id和QQ登录的id使用同一个SharedPreferences文件存储
+    * */
+    private int id=-100;
 
     private EditText editText;//name
     private EditText editText_2;//password
@@ -54,6 +61,9 @@ public class Create_user extends AppCompatActivity {
      * 使用SQLite数据库存储用户的账号和密码，注：对于每一条item，使用的是LitePal存储
      * */
     private void save_user(String name,String password){
+        //初始化id
+        init_id();
+
         user=new Users(this,"users.db",null,1);
         /*
         * 用户填完信息，成功注册后，系统将分配一个id字符串，将把这个字符串传到用户完成注册后的反馈页面
@@ -65,7 +75,6 @@ public class Create_user extends AppCompatActivity {
         ContentValues values=new ContentValues();
         user_id="GG"+id;
         values.put("user_id",user_id);
-        id++;
         values.put("name",name);
         values.put("password",password);
         db.insert("User",null,values);
@@ -75,5 +84,19 @@ public class Create_user extends AppCompatActivity {
         intent.putExtra("user_name",name);
         intent.putExtra("user_id",user_id);
         startActivity(intent);
+    }
+
+    private void init_id(){
+        SharedPreferences sharedPreferences=getSharedPreferences("id_file",MODE_PRIVATE);
+       id=sharedPreferences.getInt("id",-100);
+
+       //取出id后，马上进行加1，再重新存进去
+       int id_2=id;
+       id_2++;
+       SharedPreferences.Editor editor=sharedPreferences.edit();
+       editor.clear();
+       editor.putInt("id",id_2);
+       editor.putBoolean("flag",false);
+       editor.apply();
     }
 }

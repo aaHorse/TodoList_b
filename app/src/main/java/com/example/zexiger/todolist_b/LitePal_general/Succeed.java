@@ -28,7 +28,6 @@ public class Succeed extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.back);
         }
 
-
         String user_id;
         String name;
         Intent intent=getIntent();
