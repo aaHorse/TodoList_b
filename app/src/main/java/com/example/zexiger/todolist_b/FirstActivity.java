@@ -1,7 +1,9 @@
 package com.example.zexiger.todolist_b;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.zexiger.todolist_b.LitePal_general.Create_user;
 import com.example.zexiger.todolist_b.LitePal_general.Sign_in_general;
+import com.example.zexiger.todolist_b.SQLite_User.Users;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
@@ -43,6 +46,9 @@ public class FirstActivity extends AppCompatActivity {
     private UserInfo mUserInfo;
     private ImageButton button;
 
+    private static int id=1;//用于给新注册的用户分配id
+    String name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +61,7 @@ public class FirstActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mIUiListener = new BaseUiListener();
                 //all表示获取所有权限
                 mTencent.login(FirstActivity.this,"all", mIUiListener);
@@ -114,7 +121,19 @@ public class FirstActivity extends AppCompatActivity {
                         initOpenidAndToken(jsonObject);
                         getUserInfo();
 
+                        Users user=new Users(FirstActivity.this,"users.db",null,1);
+                        SQLiteDatabase db=user.getWritableDatabase();
+
+                        ContentValues values=new ContentValues();
+                        String user_id="QQ"+id;
+                        values.put("user_id",user_id);
+                        id++;
+                        values.put("name",name);
+                        values.put("password","00000000");//与general注册用户对齐
+                        db.insert("User",null,values);
+
                         Intent intent=new Intent(FirstActivity.this,MainActivity.class);
+                        intent.putExtra("id",user_id);
                         startActivity(intent);
                     }
 
@@ -141,8 +160,8 @@ public class FirstActivity extends AppCompatActivity {
 
                             ////获取昵称
                             if (msg.what == 0) {
-                                Log.d("ttttt", "获取昵称--->" + (CharSequence) msg.obj);
-
+                                name=(String) msg.obj;
+                                Log.d("ttttt", "获取昵称--->" + (CharSequence)msg.obj);
                             }
                         }
                     };
@@ -198,6 +217,7 @@ public class FirstActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }
 
         @Override
@@ -221,11 +241,13 @@ public class FirstActivity extends AppCompatActivity {
      * @param data
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("ttttt","hhhhhhh2");
         if(requestCode == Constants.REQUEST_LOGIN){
             Tencent.onActivityResultData(requestCode,resultCode,data,mIUiListener);
         }
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d("ttttt","跑到下面来了！！！");
     }
 }

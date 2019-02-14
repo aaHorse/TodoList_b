@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         id=intent.getStringExtra("id");
-
+        Log.d("ttttt","id"+id);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         floatingActionButton = findViewById(R.id.floating_action_button);
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         //LitePal.getDatabase();
 
         com.example.zexiger.todolist_b.recyclerview.ItemInit.initItems(cv,context);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,2);
             }
         });
-        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
+
+        /*
+        * 这一行代码会使MainActivity闪退！！！！！！！！！！！！！！！！！！！
+        * */
+        //com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
     }
 
     @Override

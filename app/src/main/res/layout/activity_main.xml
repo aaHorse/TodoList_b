@@ -7,65 +7,66 @@
     tools:context=".MainActivity">
 
     <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawable_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:id="@+id/drawable_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <android.support.design.widget.CoordinatorLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                android:background="?attr/colorPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
-            </android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:background="?attr/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+    </android.support.v7.widget.Toolbar>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_show"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_show"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/floating_action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_margin="16dp"
-                android:src="@drawable/floating_action_button"
-                app:backgroundTint="@color/colorPrimary"
-                app:fabSize="normal" />
+    <android.support.design.widget.FloatingActionButton
+    android:id="@+id/floating_action_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:layout_margin="16dp"
+    android:src="@drawable/floating_action_button"
+    app:backgroundTint="@color/colorPrimary"
+    app:fabSize="normal" />
 
-        </android.support.design.widget.CoordinatorLayout>
-
-
-        <LinearLayout
-            android:id="@+id/line2"
-            android:orientation="vertical"
-            android:layout_gravity="start"
-            android:background="#FFFFFF"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <include layout="@layout/nav_id_show" />
+    </android.support.design.widget.CoordinatorLayout>
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <LinearLayout
+    android:id="@+id/line2"
+    android:orientation="vertical"
+    android:layout_gravity="start"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-            </android.support.v7.widget.RecyclerView>
+    <include layout="@layout/nav_id_show" />
 
-        </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+    android:id="@+id/recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
 
 
     </android.support.v4.widget.DrawerLayout>
+
 
 </android.support.constraint.ConstraintLayout>
