@@ -1,5 +1,6 @@
 package com.example.zexiger.todolist_b.recyclerview_show;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,10 +15,12 @@ import com.example.zexiger.todolist_b.R;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    private List<Contents> itemList;
+    private List<Contents> list;
+    private Context context;
 
-    public ItemAdapter(List<Contents>list){
-        this.itemList=list;
+    public ItemAdapter(Context context, List<Contents>list){
+        this.list=list;
+        this.context=context;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -37,28 +40,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.show_item_layout,viewGroup,false);
         final ViewHolder viewHolder=new ViewHolder(view);
-        viewHolder.listView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position=viewHolder.getAdapterPosition();
-                switch(position){
-                    default:
-                        Toast.makeText(v.getContext(),"hahahahaha",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Contents item=itemList.get(i);
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+        Contents item=list.get(i);
         viewHolder.textView.setText(item.getContent_text());
         viewHolder.textView_2.setText(item.getDate());
+
+
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return list.size();
     }
 }

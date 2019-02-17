@@ -25,12 +25,12 @@
     android:layout_height="?attr/actionBarSize">
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
     android:id="@+id/rv_show"
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+    </com.yanzhenjie.recyclerview.SwipeRecyclerView>
 
     <android.support.design.widget.FloatingActionButton
     android:id="@+id/floating_action_button"

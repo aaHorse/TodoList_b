@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zexiger.todolist_b.LitePal_general.Add_content;
+import com.example.zexiger.todolist_b.LitePal_general.Contents;
 import com.example.zexiger.todolist_b.SQLite_User.Query;
 import com.example.zexiger.todolist_b.floating_action_button.Fab_add;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floating_action_button);
 
         Intent intent=getIntent();
+        intent.putExtra("hhh",id);
         id=intent.getStringExtra("id");
 
         Log.d("ttttt","id"+id);
@@ -99,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
+        Log.d("ttttt","在这");
+        Contents contents=(Contents)data.getSerializableExtra("user");
+        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.add(contents);
     }
 }

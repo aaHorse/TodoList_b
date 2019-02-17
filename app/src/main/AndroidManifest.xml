@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".LitePal_general.Add_content"></activity>
-        <activity android:name=".LitePal_general.Create_user"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LitePal_general.Add_content" />
+        <activity android:name=".LitePal_general.Create_user" />
 
         <!-- 注册SDKActivity -->
         <activity
@@ -44,9 +44,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <activity android:name=".LitePal_general.Succeed"
-            android:label="注册成功"></activity>
+        <activity
+            android:name=".LitePal_general.Succeed"
+            android:label="注册成功" />
+        <activity android:name=".MainActivity_2"></activity>
     </application>
 
 </manifest>

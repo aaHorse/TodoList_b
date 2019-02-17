@@ -50,11 +50,14 @@ public class Add_content extends AppCompatActivity {
                 user.setDate("2019年2月8日");
                 user.setLevel(1);
                 user.setDone(false);
+                user.setChecked(false);
 
                 user.save();
 
+
                 //完成编辑之后，跳回主界面
                 Intent intent_2=new Intent();
+                intent_2.putExtra("user",user);
                 setResult(RESULT_OK,intent_2);
                 finish();
             }

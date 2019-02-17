@@ -181,6 +181,7 @@ public class FirstActivity extends AppCompatActivity {
                                 //仍然使用name做唯一性检查
                                 init_id();
                                 if(!Query.query_have(user_name,getWindow().getContext())){
+                                    id_add();
                                     //新用户
                                     Log.d("ttttt","新用户");
                                     SQLiteDatabase db=user.getWritableDatabase();
@@ -293,9 +294,10 @@ public class FirstActivity extends AppCompatActivity {
     private void init_id(){
         SharedPreferences sharedPreferences=getSharedPreferences("id_file",MODE_PRIVATE);
         id=sharedPreferences.getInt("id",-100);
-
-        //取出id后，马上进行加1，再重新存进去
-        int id_2=id;
+    }
+    private void id_add(){
+        SharedPreferences sharedPreferences=getSharedPreferences("id_file",MODE_PRIVATE);
+        int id_2=sharedPreferences.getInt("id",-100);
         id_2++;
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.clear();
