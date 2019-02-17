@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("ttttt","id"+id);
 
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+/*        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         cv = getWindow().getDecorView();
         context=getApplicationContext();
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         com.example.zexiger.todolist_b.recyclerview_show.ItemInit.initItems(cv,context,id);
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar,menu);
         return true;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

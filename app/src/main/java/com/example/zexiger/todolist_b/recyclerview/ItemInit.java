@@ -16,7 +16,7 @@ public class ItemInit {
     public static void initItems(View view, final Context context){
         for(int i=1;i<11;i++){
             Item item=new Item();
-            item.setName(""+i);
+            item.setName("功能");
             list.add(item);
         }
         RecyclerView recyclerView= view.findViewById(R.id.recycler_view);

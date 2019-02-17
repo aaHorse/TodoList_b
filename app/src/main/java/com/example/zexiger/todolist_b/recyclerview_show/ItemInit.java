@@ -50,8 +50,9 @@ public class ItemInit {
 
         if (true){
             /////////////////////////////////
-            DefaultItemDecoration borderItemDecoration=new DefaultItemDecoration(Color.parseColor("#000000"));
-            swipeRecyclerView.addItemDecoration(borderItemDecoration);
+
+//            DefaultItemDecoration borderItemDecoration=new DefaultItemDecoration(Color.parseColor("#000000"));
+//            swipeRecyclerView.addItemDecoration(borderItemDecoration);
 
             swipeRecyclerView.setOnItemClickListener(new OnItemClickListener() {
                 @Override
