@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.d("ttttt","在这");
         Contents contents=(Contents)data.getSerializableExtra("user");
-        com.example.zexiger.todolist_b.recyclerview_show.ItemInit.add(contents);
+        if(contents!=null){
+            com.example.zexiger.todolist_b.recyclerview_show.ItemInit.add(contents);
+        }else{
+            Toast.makeText(MainActivity.this,"添加取消",Toast.LENGTH_SHORT).show();
+        }
     }
 }
