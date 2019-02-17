@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.classichu.lineseditview.LinesEditView;
 import com.example.zexiger.todolist_b.MainActivity;
 import com.example.zexiger.todolist_b.R;
 import com.example.zexiger.todolist_b.SQLite_User.Users;
@@ -23,7 +24,10 @@ import static org.litepal.crud.DataSupport.findFirst;
 
 public class Add_content extends AppCompatActivity {
     private String id;
-    private EditText editText;
+    /*
+    * 使用第三方控件
+    * */
+    private LinesEditView editText;
     private Button button;
 
     @Override
@@ -31,7 +35,7 @@ public class Add_content extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_content);
 
-        editText=(EditText)findViewById(R.id.et_add);
+        editText=(LinesEditView)findViewById(R.id.et_add);
         button=(Button)findViewById(R.id.bt_add);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +45,7 @@ public class Add_content extends AppCompatActivity {
                 Intent intent=getIntent();
                 id=intent.getStringExtra("id");
 
-                String content_text=editText.getText().toString();
+                String content_text=editText.getContentText().toString();
 
                 Contents user=new Contents();
 
