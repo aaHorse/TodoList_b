@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.zexiger.todolist_b.EditTextShakeHelper;
 import com.example.zexiger.todolist_b.R;
 import com.example.zexiger.todolist_b.SQLite_User.Users;
 
@@ -51,27 +52,24 @@ public class Create_user extends AppCompatActivity {
                 if(password_string.equals(password_string_2)){
                     save_user(name_string,password_string);//成功注册，进行保存
                 }else{
+                    new EditTextShakeHelper(Create_user.this).shake(editText_2,editText_3);
                     Toast.makeText(Create_user.this,"两次密码不符",Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
     /**
      * 使用SQLite数据库存储用户的账号和密码，注：对于每一条item，使用的是LitePal存储
      * */
     private void save_user(String name,String password){
         //初始化id
         init_id();
-
         user=new Users(this,"users.db",null,1);
         /*
         * 用户填完信息，成功注册后，系统将分配一个id字符串，将把这个字符串传到用户完成注册后的反馈页面
         * */
         String user_id;
-
         SQLiteDatabase db=user.getWritableDatabase();
-
         ContentValues values=new ContentValues();
         user_id="GG"+id;
         values.put("user_id",user_id);

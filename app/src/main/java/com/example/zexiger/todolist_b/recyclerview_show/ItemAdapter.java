@@ -1,11 +1,14 @@
 package com.example.zexiger.todolist_b.recyclerview_show;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +30,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         TextView textView;
         TextView textView_2;
         View listView;
+        RatingBar ratingBar;
         public ViewHolder(View view){
             super(view);
             listView=view;
             textView=(TextView)view.findViewById(R.id.tv_content);
             textView_2=(TextView)view.findViewById(R.id.tv_date);
+            ratingBar=(RatingBar)view.findViewById(R.id.ratingbar_show);
         }
     }
 
@@ -48,8 +53,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Contents item=list.get(i);
         viewHolder.textView.setText(item.getContent_text());
         viewHolder.textView_2.setText(item.getDate());
+        viewHolder.ratingBar.setRating(item.getLevel());
 
-
+        if (item.isDone()){
+            viewHolder.textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            viewHolder.textView.getPaint().setAntiAlias(true);
+        }else{
+            Log.d("ttttt","item.isDone=false");
+            viewHolder.textView.getPaint().setFlags(0);
+        }
     }
 
     @Override

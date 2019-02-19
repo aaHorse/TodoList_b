@@ -12,8 +12,8 @@ import java.util.List;
 import com.example.zexiger.todolist_b.R;;
 
 public class ItemInit {
-    private static List<Item> list=new ArrayList<>();
-    public static void initItems(View view, final Context context){
+    private List<Item> list=new ArrayList<>();
+    public void initItems(View view, final Context context){
         for(int i=1;i<11;i++){
             Item item=new Item();
             item.setName("功能");

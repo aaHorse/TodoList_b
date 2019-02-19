@@ -30,6 +30,8 @@
                 android:id="@+id/tv_content_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="内容"
                 android:textSize="25dp" />
 
@@ -37,10 +39,22 @@
                 android:id="@+id/tv_date_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="时间"
                 android:textSize="15dp" />
 
+
         </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/ratingbar_show_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="3"
+            android:rating="1"
+            android:isIndicator="true"
+            android:progressTint="@android:color/holo_orange_dark" />
 
     </LinearLayout>
 

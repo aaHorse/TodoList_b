@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.zexiger.todolist_b.LitePal_general.Contents;
 import com.example.zexiger.todolist_b.recyclerview_show.ItemAdapter_2;
+import com.example.zexiger.todolist_b.recyclerview_show.ItemInit;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import org.litepal.crud.DataSupport;
@@ -37,12 +37,13 @@ public class MainActivity_2 extends AppCompatActivity {
         checked_num=(TextView)findViewById(R.id.tv);
 
         Intent intent=getIntent();
-        id=intent.getStringExtra("hhh");
+        id=intent.getStringExtra("id");
 
-        list=DataSupport.where("id_string = ?",id).find(Contents.class);
+        //将list翻转,主要是要以时间线显示
+        list=ItemInit.get_list(id);
 
-       View cv = getWindow().getDecorView();
-       Context context =getApplicationContext();
+       final View cv = getWindow().getDecorView();
+       final Context context =getApplicationContext();
 
 
         swipeRecyclerView=findViewById(R.id.srv_show_2);
@@ -63,9 +64,15 @@ public class MainActivity_2 extends AppCompatActivity {
                     Contents item=list.get(i);
                     if(item.isChecked()==true){
                         list.remove(i);
+                        String date_id=item.getDate();
+                        DataSupport.deleteAll(Contents.class,"date = ?",date_id);
                     }
                 }
-                itemAdapter_2.notifyDataSetChanged();
+                layoutManager=new LinearLayoutManager(MainActivity_2.this);
+                itemAdapter_2=new ItemAdapter_2(cv,context,list);
+                swipeRecyclerView.setLayoutManager(layoutManager);
+                swipeRecyclerView.setAdapter(itemAdapter_2);
+
                 button_2.setText("全选");
                 checked_num.setText("选择项目");
             }
@@ -88,6 +95,9 @@ public class MainActivity_2 extends AppCompatActivity {
                     Contents item=list.get(i);
                     item.setChecked(isAll);
                 }
+                /*
+                * 主要是为了刷新标题的显示了多少项
+                * */
                 itemAdapter_2.notifyDataSetChanged();
             }
         });
@@ -101,7 +111,9 @@ public class MainActivity_2 extends AppCompatActivity {
                     Contents item=list.get(i);
                     item.setChecked(false);
                 }
-                finish();
+                Intent intent_2=new Intent(MainActivity_2.this,MainActivity.class);
+                intent_2.putExtra("id",id);
+                startActivity(intent_2);
             }
         });
     }

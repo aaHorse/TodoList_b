@@ -1,6 +1,7 @@
 package com.example.zexiger.todolist_b.recyclerview_show;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.zexiger.todolist_b.LitePal_general.Contents;
@@ -32,6 +34,7 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
         TextView textView;
         TextView textView_2;
         CheckBox checkBox;
+        RatingBar ratingBar;
 
         View listView;
         public ViewHolder(View view){
@@ -40,6 +43,7 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
             textView=(TextView)view.findViewById(R.id.tv_content_2);
             textView_2=(TextView)view.findViewById(R.id.tv_date_2);
             checkBox=(CheckBox)view.findViewById(R.id.checkBox_2);
+            ratingBar=(RatingBar)view.findViewById(R.id.ratingbar_show_2);
         }
     }
 
@@ -48,6 +52,7 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.show_item_layout_2,viewGroup,false);
         final ViewHolder viewHolder=new ViewHolder(view);
+
         return viewHolder;
     }
 
@@ -58,6 +63,11 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
         viewHolder.textView_2.setText(item.getDate());
         viewHolder.checkBox.setChecked(item.isChecked());
         checked_num=(TextView)view.findViewById(R.id.tv);
+        viewHolder.ratingBar.setRating(item.getLevel());
+
+        if (item.isDone()){
+            viewHolder.textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        }
 
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

@@ -11,6 +11,8 @@
 
         <TextView
             android:id="@+id/item_name"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textSize="30dp"
             android:layout_marginLeft="40dp"
             android:layout_width="match_parent"
