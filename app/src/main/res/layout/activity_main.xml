@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:SearchView="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <android.support.v4.widget.DrawerLayout
@@ -16,20 +17,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/toolbar"-->
-    <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-    <!--android:background="?attr/colorPrimary"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?attr/actionBarSize">-->
-    <!--</android.support.v7.widget.Toolbar>-->
 
-    <com.yanzhenjie.recyclerview.SwipeRecyclerView
-        android:id="@+id/rv_show"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.yanzhenjie.recyclerview.SwipeRecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/aaa"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:fitsSystemWindows="true">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/activity_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:titleTextColor="@android:color/white">
+
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <km.lmy.searchview.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#fff"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp"
+                app:defaultState="close"
+                app:hintText="input name" />
+
+            <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                android:id="@+id/rv_show"
+                android:layout_below="@+id/aaa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </com.yanzhenjie.recyclerview.SwipeRecyclerView>
+        </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_action_button"

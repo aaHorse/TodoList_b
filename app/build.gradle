@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.zexiger.todolist_b"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -33,4 +33,5 @@ dependencies {
     implementation 'org.litepal.android:core:1.4.1'
     implementation 'com.yanzhenjie.recyclerview:support:1.3.0'
     implementation 'com.github.louisgeek:ClassicLinesEditView:1.0.2'
+    implementation 'com.github.limuyang2:CardSearchView:1.1.0.0'
 }

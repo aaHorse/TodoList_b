@@ -31,32 +31,30 @@ import static org.litepal.crud.DataSupport.findAll;
 import static org.litepal.crud.DataSupport.findFirst;
 
 public class ItemInit {
+    private View view;
+    private Context context;
+    private String id;
+
     private ItemAdapter adapter;
     private List<Contents>list;
-    private String id;
-    private Context context;
     private SwipeRecyclerView swipeRecyclerView;
 
     /*
-    * 进行数据库查找，按level顺序排到list中
-    *
+    * 构造函数
     * */
-    public void initItems(final View view, final Context context, final String id) {
-        //查询数据库中，Contents表的所有数据，这里先测试，待完善,
-        //该id用于查找当前用户的content
-
+    public ItemInit(View view,Context context,String id){
+        this.view=view;
         this.id=id;
         this.context=context;
+    }
+
+    public void initItems() {
+        /*
+        * 获得当前id对应的item，在这个函数会进行排列
+        * */
         list= get_list(id);
-        /////
        swipeRecyclerView=(SwipeRecyclerView)view.findViewById(R.id.rv_show);
-
         if (true){
-            /////////////////////////////////
-
-//            DefaultItemDecoration borderItemDecoration=new DefaultItemDecoration(Color.parseColor("#000000"));
-//            swipeRecyclerView.addItemDecoration(borderItemDecoration);
-
             //点击
             swipeRecyclerView.setOnItemClickListener(new OnItemClickListener() {
                 @Override
@@ -64,105 +62,20 @@ public class ItemInit {
                     edit(position);
                 }
             });
-
             //滑动
             swipeRecyclerView.setSwipeMenuCreator(new SwipeMenuCreator() {
                 @Override
                 public void onCreateMenu(SwipeMenu leftMenu, SwipeMenu rightMenu, int position) {
-
-                    SwipeMenuItem swipeMenuItem=new SwipeMenuItem(context);
-                    swipeMenuItem.setText("修改");
-                    swipeMenuItem.setTextSize(20);
-                    swipeMenuItem.setBackgroundColor(Color.parseColor("#FFFF00"));
-                    swipeMenuItem.setTextColor(Color.parseColor("#000000"));
-                    swipeMenuItem.setHeight(MATCH_PARENT);
-                    swipeMenuItem.setWidth(300);
-                    rightMenu.addMenuItem(swipeMenuItem);
-
-                    SwipeMenuItem swipeMenuItem_2=new SwipeMenuItem(context)
-                            .setText("删除")
-                            .setTextSize(20)
-                            .setBackgroundColor(Color.parseColor("#FF0000"))
-                            .setTextColor(Color.parseColor("#000000"))
-                            .setHeight(MATCH_PARENT)
-                            .setWidth(300);
-                    rightMenu.addMenuItem(swipeMenuItem_2);
-
-                    SwipeMenuItem swipeMenuItem_3=new SwipeMenuItem(context)
-                            .setText("已完成")
-                            .setTextSize(20)
-                            .setBackgroundColor(Color.parseColor("#FFFFE0"))
-                            .setTextColor(Color.parseColor("#000000"))
-                            .setHeight(MATCH_PARENT)
-                            .setWidth(300);
-                    leftMenu.addMenuItem(swipeMenuItem_3);
-
-                    SwipeMenuItem swipeMenuItem_4=new SwipeMenuItem(context)
-                            .setText("撤销")
-                            .setTextSize(20)
-                            .setBackgroundColor(Color.parseColor("#EE799F"))
-                            .setTextColor(Color.parseColor("#000000"))
-                            .setHeight(MATCH_PARENT)
-                            .setWidth(300);
-                    leftMenu.addMenuItem(swipeMenuItem_4);
-
+                    setMenu(leftMenu,rightMenu);
                 }
             });
-
             //滑动菜单点击
             swipeRecyclerView.setOnItemMenuClickListener(new OnItemMenuClickListener() {
                 @Override
                 public void onItemClick(SwipeMenuBridge menuBridge, int position) {
-                    menuBridge.closeMenu();
-                    int direction=menuBridge.getDirection();
-                    if(direction==SwipeRecyclerView.LEFT_DIRECTION){
-                        //左侧菜单
-                        int menu_position=menuBridge.getPosition();
-                        Contents item=list.get(position);
-                        String str=item.getDate();
-                        switch (menu_position){
-                            case 0:
-                                Log.d("ttttt","左边case0");
-                                item.setDone(true);
-                                break;
-                            case 1:
-                                Log.d("ttttt","左边case1");
-                                /*
-                                * LitePal对默认值不予以更新
-                                * */
-                                item.setToDefault("done");
-                                break;
-                            default:
-                                Log.d("tttttt","侧滑菜单有问题");
-                        }
-                        //修改数据库item对应的Done
-                        item.updateAll("date=?",str);
-                        refresh();
-                        Toast.makeText(context,"点击了左菜单",Toast.LENGTH_SHORT).show();
-                    }else if(direction==SwipeRecyclerView.RIGHT_DIRECTION){
-                        //右侧菜单
-                        int menu_position=menuBridge.getPosition();
-                        switch (menu_position){
-                            case 0:
-                                edit(position);
-                                break;
-                            case 1:
-                                Contents item=list.get(position);
-                                list.remove(position);
-                                adapter.notifyDataSetChanged();
-                                String date_id=item.getDate();
-                                DataSupport.deleteAll(Contents.class,"date = ?",date_id);
-                                break;
-                            default:
-                                Log.d("tttttt","侧滑菜单有问题");
-                        }
-                    }else{
-                        //其他
-                        Log.d("ttttt","滑动菜单的左右出错");
-                    }
+                    mySetMenuItemListener(menuBridge,position);
                 }
             });
-
             //长按
             swipeRecyclerView.setOnItemLongClickListener(new OnItemLongClickListener() {
                 @Override
@@ -174,10 +87,6 @@ public class ItemInit {
                     context.startActivity(intent);
                 }
             });
-
-            //swipeRecyclerView.setLongPressDragEnabled(true);
-            //swipeRecyclerView.setItemViewSwipeEnabled(true);
-
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             adapter=new ItemAdapter(context,list);
             swipeRecyclerView.setLayoutManager(layoutManager);
@@ -186,24 +95,18 @@ public class ItemInit {
     }
 
     public void refresh(){
-        //list.refresh(contents);
-        //重新刷新list
-        Log.d("ttttt","在这哈哈哈哈1");
-        list= get_list(id);
-        Log.d("ttttt",list.size()+"");
-        Log.d("ttttt","在这哈哈哈哈2");
+        List<Contents>list= get_list(id);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        adapter=new ItemAdapter(context,list);
+        ItemAdapter adapter=new ItemAdapter(context,list);
         swipeRecyclerView.setLayoutManager(layoutManager);
         swipeRecyclerView.setAdapter(adapter);
         Log.d("ttttt","在这哈哈哈哈3");
-//        adapter.notifyDataSetChanged();
     }
 
     /*
     * 将list翻转，主要是因为需要在显示的时候，按照距离最近的编辑时间优先显示
     * */
-    public static List<Contents> get_list(String id){
+    public List<Contents> get_list(String id){
         List<Contents> list_1;
         List<Contents> list_2;
         List<Contents> list_3;
@@ -233,5 +136,102 @@ public class ItemInit {
         intent.putExtra("flag",0);
         intent.putExtra("context_id",list.get(position).getDate());
         context.startActivity(intent);
+    }
+
+    /*
+    * item的侧滑菜单设置
+    * */
+    public void setMenu(SwipeMenu leftMenu, SwipeMenu rightMenu){
+        SwipeMenuItem swipeMenuItem=new SwipeMenuItem(context);
+        swipeMenuItem.setText("修改");
+        swipeMenuItem.setTextSize(20);
+        swipeMenuItem.setBackgroundColor(Color.parseColor("#FFFF00"));
+        swipeMenuItem.setTextColor(Color.parseColor("#000000"));
+        swipeMenuItem.setHeight(MATCH_PARENT);
+        swipeMenuItem.setWidth(300);
+        rightMenu.addMenuItem(swipeMenuItem);
+
+        SwipeMenuItem swipeMenuItem_2=new SwipeMenuItem(context)
+                .setText("删除")
+                .setTextSize(20)
+                .setBackgroundColor(Color.parseColor("#FF0000"))
+                .setTextColor(Color.parseColor("#000000"))
+                .setHeight(MATCH_PARENT)
+                .setWidth(300);
+        rightMenu.addMenuItem(swipeMenuItem_2);
+
+        SwipeMenuItem swipeMenuItem_3=new SwipeMenuItem(context)
+                .setText("已完成")
+                .setTextSize(20)
+                .setBackgroundColor(Color.parseColor("#FFFFE0"))
+                .setTextColor(Color.parseColor("#000000"))
+                .setHeight(MATCH_PARENT)
+                .setWidth(300);
+        leftMenu.addMenuItem(swipeMenuItem_3);
+
+        SwipeMenuItem swipeMenuItem_4=new SwipeMenuItem(context)
+                .setText("撤销")
+                .setTextSize(20)
+                .setBackgroundColor(Color.parseColor("#EE799F"))
+                .setTextColor(Color.parseColor("#000000"))
+                .setHeight(MATCH_PARENT)
+                .setWidth(300);
+        leftMenu.addMenuItem(swipeMenuItem_4);
+    }
+
+    /*
+    * 滑动菜单的点击事件
+    * */
+    public void mySetMenuItemListener(SwipeMenuBridge menuBridge, int position){
+        menuBridge.closeMenu();
+        list= get_list(id);
+        int direction=menuBridge.getDirection();
+        if(direction==SwipeRecyclerView.LEFT_DIRECTION){
+            //左侧菜单
+            int menu_position=menuBridge.getPosition();
+            Log.d("ttttt","item的position为");
+            Log.d("ttttt","item的position为"+position);
+            Log.d("ttttt","list的size为"+list.size());
+            Contents item=list.get(position);
+            String str=item.getDate();
+            switch (menu_position){
+                case 0:
+                    Log.d("ttttt","左边case0");
+                    item.setDone(true);
+                    break;
+                case 1:
+                    Log.d("ttttt","左边case1");
+                    /*
+                     * LitePal对默认值不予以更新，需要采用这种方式
+                     * */
+                    item.setToDefault("done");
+                    break;
+                default:
+                    Log.d("ttttt","侧滑菜单有问题");
+            }
+            //修改数据库item对应的Done
+            item.updateAll("date=?",str);
+            refresh();
+            Toast.makeText(context,"点击了左菜单",Toast.LENGTH_SHORT).show();
+        }else if(direction==SwipeRecyclerView.RIGHT_DIRECTION){
+            //右侧菜单
+            int menu_position=menuBridge.getPosition();
+            switch (menu_position){
+                case 0:
+                    edit(position);
+                    break;
+                case 1:
+                    Contents item=list.get(position);
+                    String date_id=item.getDate();
+                    DataSupport.deleteAll(Contents.class,"date = ?",date_id);
+                    refresh();
+                    break;
+                default:
+                    Log.d("ttttt","侧滑菜单有问题");
+            }
+        }else{
+            //其他
+            Log.d("ttttt","滑动菜单的左右出错");
+        }
     }
 }

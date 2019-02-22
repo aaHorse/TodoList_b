@@ -38,16 +38,12 @@ public class Sign_in_general {
             public void onClick(View v) {
                 //如果勾选了记住密码，在这里将信息进行存储
                 boolean isChecked=checkBox.isChecked();
-
-
                 String id=text_id.getText().toString();
                 String password=text_password.getText().toString();
                 if(checkInput(id,password,context)){
-
                     if (isChecked){
                         save(view,context);
                     }
-
                     right_id=id;
                     Intent intent=new Intent(context,MainActivity.class);
                     intent.putExtra("id",id);

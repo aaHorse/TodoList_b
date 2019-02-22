@@ -65,6 +65,9 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
         checked_num=(TextView)view.findViewById(R.id.tv);
         viewHolder.ratingBar.setRating(item.getLevel());
 
+        /*
+        * 设置划线
+        * */
         if (item.isDone()){
             viewHolder.textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
@@ -72,8 +75,15 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                item.setChecked(isChecked);
-
+                if(isChecked){
+                    //true
+                    item.setChecked(isChecked);
+                    item.updateAll("date=?",item.getDate());
+                }else{
+                    //false
+                    item.setToDefault("Checked");
+                    item.updateAll("date=?",item.getDate());
+                }
                 int num=getCheckedNum();
                 if(num==0){
                     checked_num.setText("选择项目");

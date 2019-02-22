@@ -2,8 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/item_1"
-        android:title="item_1"
-        app:showAsAction="never"/>
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:tint="@android:color/white"
+        android:title="搜索"
+        app:showAsAction="always"/>
 
 </menu>

@@ -18,7 +18,6 @@ public class Succeed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_succeed);
-
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_2);
         setSupportActionBar(toolbar);
         //返回通过Toolbar设置返回键，在后面有重写点击响应函数
@@ -27,7 +26,6 @@ public class Succeed extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.back);
         }
-
         String user_id;
         String name;
         Intent intent=getIntent();

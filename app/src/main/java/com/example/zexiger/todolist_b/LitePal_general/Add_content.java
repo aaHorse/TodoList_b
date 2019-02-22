@@ -12,6 +12,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.classichu.lineseditview.LinesEditView;
+import com.example.zexiger.todolist_b.MainActivity;
 import com.example.zexiger.todolist_b.R;
 
 import org.litepal.crud.DataSupport;
@@ -20,10 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
-import static org.litepal.crud.DataSupport.find;
-import static org.litepal.crud.DataSupport.findAll;
-import static org.litepal.crud.DataSupport.findFirst;
 
 public class Add_content extends AppCompatActivity {
     private String id;
@@ -65,16 +62,13 @@ public class Add_content extends AppCompatActivity {
             date_id=intent.getStringExtra("context_id");
             //开数据库，获取对应位置的content
             Contents item=getItem(date_id);
-
             editText.setContentText(item.getContent_text());
             mRatingBar.setRating(item.getLevel());
-
             flag=true;
         }else{
             editText.setHintText("input here ...");
             flag=false;
         }
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +153,7 @@ public class Add_content extends AppCompatActivity {
         //如果是点击item增加的，相当于更新，把它删掉
         if(flag){
             DataSupport.deleteAll(Contents.class,"date = ?",date_id);
-            adapterobj.refresh();
+            MainActivity.mainActivity_refresh();
             finish();
         }
 
