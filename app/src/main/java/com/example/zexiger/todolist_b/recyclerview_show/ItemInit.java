@@ -27,36 +27,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.v7.widget.ListPopupWindow.MATCH_PARENT;
+import static com.example.zexiger.todolist_b.LitePal_general.Search_result.itemInit;
 import static org.litepal.crud.DataSupport.findAll;
 import static org.litepal.crud.DataSupport.findFirst;
 
+
+/*
+* 该类将被声明两个对象，一个是MainActivity里面的，一个是Search_Result里面的，在构造函数最后一个参数作为区分
+*
+* */
 public class ItemInit {
     private View view;
     private Context context;
     private String id;
+    private String activity;//用于区分
     private ItemAdapter adapter;
     private SwipeRecyclerView swipeRecyclerView;
 
     /*
     * 构造函数
     * */
-    public ItemInit(View view,Context context,String id){
+    public ItemInit(View view,Context context,String id,String activity){
         this.view=view;
         this.id=id;
         this.context=context;
+        this.activity=activity;
     }
 
     public void initItems() {
         /*
         * 获得当前id对应的item，在这个函数会进行排列
         * */
-       swipeRecyclerView=(SwipeRecyclerView)view.findViewById(R.id.rv_show);
+        if(activity.equals("MainActivity")){
+            swipeRecyclerView=(SwipeRecyclerView)view.findViewById(R.id.rv_show);
+        }else if(activity.equals("Search_result")){
+            swipeRecyclerView=(SwipeRecyclerView)view.findViewById(R.id.srv_show_3);
+        }
+
         if (true){
             //点击
             swipeRecyclerView.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(View itemView, int position) {
-                    edit(position);
+                    edit(position,1);
                 }
             });
             //滑动
@@ -81,6 +94,11 @@ public class ItemInit {
                     Toast.makeText(context,"长按按钮触动",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context,MainActivity_2.class);
                     intent.putExtra("id",id);
+                    if(activity.equals("MainActivity")){
+                        intent.putExtra("activity","MainActivity");
+                    }else if(activity.equals("Search_Result")){
+                        intent.putExtra("activity","Search_Result");
+                    }
                     context.startActivity(intent);
                 }
             });
@@ -93,11 +111,17 @@ public class ItemInit {
 
     /*
     * 点击修改逻辑(包括点击修改，点击整个item)后，跳转到编辑菜单
+    * flag用于区分：点击整个item为1，点击修改为2
     * */
-    private void edit(int position){
+    private void edit(int position,int flag){
         Intent intent=new Intent(context,Add_content.class);
         intent.putExtra("id",id);
-        intent.putExtra("flag",0);
+        intent.putExtra("flag",flag);
+        if(activity.equals("MainActivity")){
+            intent.putExtra("activity","MainActivity");
+        }else if(activity.equals("Search_Result")){
+            intent.putExtra("activity","Search_Result");
+        }
         intent.putExtra("context_id",adapter.getList().get(position).getDate());
         context.startActivity(intent);
     }
@@ -181,7 +205,7 @@ public class ItemInit {
             int menu_position=menuBridge.getPosition();
             switch (menu_position){
                 case 0:
-                    edit(position);
+                    edit(position,2);
                     break;
                 case 1:
                     Contents item=adapter.getList().get(position);

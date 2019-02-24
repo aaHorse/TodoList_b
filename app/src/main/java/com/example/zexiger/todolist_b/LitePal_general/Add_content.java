@@ -21,9 +21,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.zexiger.todolist_b.LitePal_general.Search_result.itemInit;
 import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
 
 
+
+/*
+* Add_content这个活动可以通过以下几个事件过来
+* //MainActivity界面
+* 1、用户直接点击了item
+* 2、用户点击了修改按钮
+* 3、用户点击＋
+* //Search_Result界面
+* 1、用户点击了item
+* 2、用户点击了修改按钮
+*
+* 以下通过Intent传参数的方法作为区分
+* Intent将传两个参数，第一个参数：字符串"MainActivity"  "Search_Result" ,intent提取:"activity"
+* 第二个参数：int类型 1  2  ，1表示点击item，2表示点击了修改，intent提取:"flag"
+* */
 public class Add_content extends AppCompatActivity {
     private String id;
     /*
@@ -40,7 +56,8 @@ public class Add_content extends AppCompatActivity {
 
     private List<Contents> list;//用于数据库获取，date的context
 
-    private Boolean flag=false;//用于区别，这个页面是谁启动的，如果是点击Item启动的，为true；
+    private int flag=-1;//用于区别，这个页面是谁启动的，如果是点击Item启动的，为1,修改逻辑启动的为2,点击加号为3
+    private String activity;
     //如果是点击加号启动的，为false；
     private String date_id="00000";//如果是点击Item启动的，我们储存item对应的唯一id,在编辑完之后，在数据库中将其删除，再增加
 
@@ -60,16 +77,18 @@ public class Add_content extends AppCompatActivity {
         editText.setContentTextColor(Color.parseColor("#000000"));
 
         Intent intent=getIntent();
-        if(intent.getIntExtra("flag",-1)==0){
+        flag=intent.getIntExtra("flag",-1);
+        activity=intent.getStringExtra("activity");
+        if(flag==1||flag==2){
+            //点击item过来的,或点击修改
             date_id=intent.getStringExtra("context_id");
             //开数据库，获取对应位置的content
             Contents item=getItem(date_id);
             editText.setContentText(item.getContent_text());
             mRatingBar.setRating(item.getLevel());
-            flag=true;
-        }else{
+        }else if(flag==3){
+            //点击＋号过来的
             editText.setHintText("input here ...");
-            flag=false;
         }
         //添加
         button.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +101,8 @@ public class Add_content extends AppCompatActivity {
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //完成编辑之后，跳回主界面
-                Intent intent_2=new Intent();
-                setResult(RESULT_OK,intent_2);
-                finish();//按了返回键，不保存数据，直接销毁当前的界面
+                //按了返回键，不保存数据，直接销毁当前的界面
+                finish();
             }
         });
         //垃圾桶
@@ -152,10 +169,14 @@ public class Add_content extends AppCompatActivity {
         user.setChecked(false);
         user.save();
         //如果是点击item相当于编辑的，就是更新，把原本的删掉
-        if(flag){
+        if(flag==1||flag==2){
             DataSupport.deleteAll(Contents.class,"date = ?",date_id);
         }
-        adapterobj.refreshAll();
+        if(activity.equals("MainActivity")){
+            adapterobj.refreshAll();
+        }else if(activity.equals("Search_Result")){
+            itemInit.refreshAll();
+        }
         finish();
     }
 

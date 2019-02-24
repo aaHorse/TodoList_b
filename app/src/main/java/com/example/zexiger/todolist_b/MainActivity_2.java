@@ -20,6 +20,7 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.zexiger.todolist_b.LitePal_general.Search_result.itemInit;
 import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
 
 public class MainActivity_2 extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class MainActivity_2 extends AppCompatActivity {
     private Button button_3;//取消
     private View view;
     private Context context;
+    private String activity;//用于区分从不同活动过来的，方便返回
 
     private String id;
 
@@ -91,7 +93,14 @@ public class MainActivity_2 extends AppCompatActivity {
         button_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterobj.refreshAll();
+                Contents item=new Contents();
+                item.setToDefault("Checked");
+                item.updateAll("id_string=?",id);
+                if(activity.equals("MainActivity")){
+                    adapterobj.refreshAll();
+                }else if(activity.equals("Search_Result")){
+                    itemInit.refreshAll();
+                }
                 finish();
             }
         });

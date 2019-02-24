@@ -99,13 +99,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Add_content.class);
                 intent.putExtra("id",id);
-                intent.putExtra("flag",1);
+                intent.putExtra("activity","MainActivity");
+                intent.putExtra("flag",3);
                 startActivity(intent);
             }
         });
 
         //显示list界面
-        adapterobj=new com.example.zexiger.todolist_b.recyclerview_show.ItemInit(cv,context,id);
+        adapterobj=new com.example.zexiger.todolist_b.recyclerview_show.ItemInit(cv,context,id,"MainActivity");
         adapterobj.initItems();
     }
 

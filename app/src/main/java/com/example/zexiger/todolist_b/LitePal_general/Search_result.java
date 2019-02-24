@@ -23,13 +23,15 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
+
 public class Search_result extends AppCompatActivity {
     private String searchText;
     private String id;
     private Toolbar toolbar;
     private View view;
     private Context context;
-    private ItemInit itemInit;
+    public static ItemInit itemInit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +59,16 @@ public class Search_result extends AppCompatActivity {
                .order("id_string").find(Contents.class);
         Log.d("ttttt","搜索2");
 
-        itemInit=new ItemInit(view,context,id);
+        itemInit=new ItemInit(view,context,id,"Search_result");
         itemInit.initItems();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+            //点击返回按钮，刷新MainActivity
             case android.R.id.home:
+                adapterobj.refreshAll();
                 finish();
             default:
                 Log.d("ttttt","搜索结果的ToolBar出问题");
