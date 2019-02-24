@@ -12,6 +12,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.classichu.lineseditview.LinesEditView;
+import com.example.zexiger.todolist_b.BaseActivity;
 import com.example.zexiger.todolist_b.MainActivity;
 import com.example.zexiger.todolist_b.R;
 
@@ -40,7 +41,7 @@ import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
 * Intent将传两个参数，第一个参数：字符串"MainActivity"  "Search_Result" ,intent提取:"activity"
 * 第二个参数：int类型 1  2  ，1表示点击item，2表示点击了修改，3表示点击＋号，intent提取:"flag"
 * */
-public class Add_content extends AppCompatActivity {
+public class Add_content extends BaseActivity {
     private String id;
     /*
     * 使用第三方控件
@@ -171,7 +172,7 @@ public class Add_content extends AppCompatActivity {
         }
         if(activity.equals("MainActivity")){
             adapterobj.refreshAll();
-        }else if(activity.equals("Search_Result")){
+        }else if(activity.equals("Search_result")){
             itemInit.refreshAll();
         }
         finish();
@@ -195,5 +196,13 @@ public class Add_content extends AppCompatActivity {
         String str=sdfd.format(now);
         Log.d("ttttt",str);
         return str;
+    }
+
+    /*
+    * 点击手机返回键
+    * */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();//注释掉这行,back键不退出activity
     }
 }

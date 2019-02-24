@@ -3,6 +3,7 @@ package com.example.zexiger.todolist_b.recyclerview_show;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,7 +92,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         if (activity.equals("MainActivity")) {
             //如果进行了
             this.list=get_list(id);
-        } else if(activity.equals("Search_Result")){
+        } else if(activity.equals("Search_result")){
             //如果list没有发生改变
             this.list=Search_result.getList();
         }

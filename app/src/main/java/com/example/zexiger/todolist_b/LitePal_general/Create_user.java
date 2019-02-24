@@ -12,11 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.zexiger.todolist_b.BaseActivity;
 import com.example.zexiger.todolist_b.EditTextShakeHelper;
 import com.example.zexiger.todolist_b.R;
 import com.example.zexiger.todolist_b.SQLite_User.Users;
 
-public class Create_user extends AppCompatActivity {
+public class Create_user extends BaseActivity {
 
     /*
     * 用户的id，采用顺序编排

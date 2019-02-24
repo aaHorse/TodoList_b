@@ -44,7 +44,7 @@ import java.util.List;
 /*
 * 登录界面
 * */
-public class FirstActivity extends AppCompatActivity {
+public class FirstActivity extends BaseActivity {
     private Button button_2;//注册按钮
     //登录按钮写到了另外一个类中     Sign_in_general.sign_in(view,context);
 

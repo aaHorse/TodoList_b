@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.zexiger.todolist_b.BaseActivity;
 import com.example.zexiger.todolist_b.R;
 import com.example.zexiger.todolist_b.recyclerview_show.ItemInit;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
 
-public class Search_result extends AppCompatActivity {
+public class Search_result extends BaseActivity {
     private static String searchText;
     private static String id;
     private Toolbar toolbar;

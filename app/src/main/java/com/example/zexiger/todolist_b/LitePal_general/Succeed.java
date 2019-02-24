@@ -8,11 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.zexiger.todolist_b.BaseActivity;
 import com.example.zexiger.todolist_b.FirstActivity;
 import com.example.zexiger.todolist_b.R;
 
 
-public class Succeed extends AppCompatActivity {
+public class Succeed extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -95,8 +95,8 @@ public class ItemInit {
                     intent.putExtra("id",id);
                     if(activity.equals("MainActivity")){
                         intent.putExtra("activity","MainActivity");
-                    }else if(activity.equals("Search_Result")){
-                        intent.putExtra("activity","Search_Result");
+                    }else if(activity.equals("Search_result")){
+                        intent.putExtra("activity","Search_result");
                     }
                     context.startActivity(intent);
                 }
@@ -110,7 +110,7 @@ public class ItemInit {
 
     /*
     * 点击修改逻辑(包括点击修改，点击整个item)后，跳转到编辑菜单
-    * flag用于区分：点击整个item为1，点击修改为2
+    * flag用于区分：点击整个item为1，点击修改为2,点击＋为3
     * */
     private void edit(int position,int flag){
         Intent intent=new Intent(context,Add_content.class);
@@ -118,8 +118,8 @@ public class ItemInit {
         intent.putExtra("flag",flag);
         if(activity.equals("MainActivity")){
             intent.putExtra("activity","MainActivity");
-        }else if(activity.equals("Search_Result")){
-            intent.putExtra("activity","Search_Result");
+        }else if(activity.equals("Search_result")){
+            intent.putExtra("activity","Search_result");
         }
         intent.putExtra("context_id",adapter.getList().get(position).getDate());
         context.startActivity(intent);

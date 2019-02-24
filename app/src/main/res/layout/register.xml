@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/circle_image_view"
+        android:src="@drawable/b"
         android:layout_width="90dp"
         android:layout_height="90dp" />
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="160dp"
-        android:text="liliyuan"
+        android:text="TodoList"
         android:textColor="#000"
         android:textSize="23sp"
         android:typeface="monospace" />
@@ -227,7 +227,5 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
     </LinearLayout>
-
-
 
 </RelativeLayout>

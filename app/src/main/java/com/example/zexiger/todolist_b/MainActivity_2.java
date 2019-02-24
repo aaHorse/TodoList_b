@@ -23,7 +23,7 @@ import java.util.List;
 import static com.example.zexiger.todolist_b.LitePal_general.Search_result.itemInit;
 import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
 
-public class MainActivity_2 extends AppCompatActivity {
+public class MainActivity_2 extends BaseActivity {
 
     private static boolean isAll=false;//是否全选
     private TextView checked_num;
