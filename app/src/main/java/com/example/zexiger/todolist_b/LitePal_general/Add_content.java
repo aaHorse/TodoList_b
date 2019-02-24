@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
+
 
 public class Add_content extends AppCompatActivity {
     private String id;
@@ -69,12 +71,14 @@ public class Add_content extends AppCompatActivity {
             editText.setHintText("input here ...");
             flag=false;
         }
+        //添加
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save();
             }
         });
+        //返回
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,12 +88,14 @@ public class Add_content extends AppCompatActivity {
                 finish();//按了返回键，不保存数据，直接销毁当前的界面
             }
         });
+        //垃圾桶
         button_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editText.setContentText("");
             }
         });
+        //√
         button_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,31 +142,20 @@ public class Add_content extends AppCompatActivity {
     private void save(){
         Intent intent=getIntent();
         id=intent.getStringExtra("id");
-
         String content_text=editText.getContentText().toString();
-
         Contents user=new Contents();
-
         user.setId_string(id);
         user.setContent_text(content_text);
         user.setDate(getStringDate());
         user.setLevel(level);
         user.setDone(false);
         user.setChecked(false);
-
         user.save();
-
-        //如果是点击item增加的，相当于更新，把它删掉
+        //如果是点击item相当于编辑的，就是更新，把原本的删掉
         if(flag){
             DataSupport.deleteAll(Contents.class,"date = ?",date_id);
-            MainActivity.mainActivity_refresh();
-            finish();
         }
-
-        //完成编辑之后，跳回主界面
-        Intent intent_2=new Intent();
-        intent_2.putExtra("user",user);
-        setResult(RESULT_OK,intent_2);
+        adapterobj.refreshAll();
         finish();
     }
 

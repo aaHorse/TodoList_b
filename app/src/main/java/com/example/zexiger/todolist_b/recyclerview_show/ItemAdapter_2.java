@@ -15,6 +15,9 @@ import android.widget.TextView;
 import com.example.zexiger.todolist_b.LitePal_general.Contents;
 import com.example.zexiger.todolist_b.R;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder> {
@@ -22,10 +25,12 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
     private Context context;
     private TextView checked_num;
     private View view;
+    private String id;
 
 
-    public ItemAdapter_2(View view,Context context, List<Contents>list){
-        this.list=list;
+    public ItemAdapter_2(View view,Context context, String id){
+        this.id=id;
+        this.list=get_list(id);
         this.context=context;
         this.view=view;
     }
@@ -71,6 +76,9 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
         if (item.isDone()){
             viewHolder.textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
+        if(item.isChecked()){
+            viewHolder.checkBox.setChecked(true);
+        }
 
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -96,6 +104,7 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
 
     private int getCheckedNum(){
         int num=0;
+        list=get_list(id);
         for(int i=0;i<list.size();i++){
             Contents item=list.get(i);
             if(item.isChecked()){
@@ -126,4 +135,36 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
         this.context = context;
     }
 
+    /*
+     * 以下代码实现批量删除操作
+     * @parameter flag 是否进行了删除操作
+     * */
+    public void notifyAdapter() {
+        this.list=get_list(id);
+        notifyDataSetChanged();
+    }
+
+    /*
+     * 将list翻转，主要是因为需要在显示的时候，按照距离最近的编辑时间优先显示
+     * */
+    public List<Contents> get_list(String id){
+        List<Contents> list_1;
+        List<Contents> list_2;
+        List<Contents> list_3;
+        List<Contents> list_all=new ArrayList<>();
+        list_1 = DataSupport.where("id_string=?and level=?",id,"1").find(Contents.class);
+        list_2 = DataSupport.where("id_string=?and level=?",id,"2").find(Contents.class);
+        list_3 = DataSupport.where("id_string=?and level=?",id,"3").find(Contents.class);
+
+        for(int i=list_3.size()-1;i>=0;i--){
+            list_all.add(list_3.get(i));
+        }
+        for(int i=list_2.size()-1;i>=0;i--){
+            list_all.add(list_2.get(i));
+        }
+        for(int i=list_1.size()-1;i>=0;i--){
+            list_all.add(list_1.get(i));
+        }
+        return list_all;
+    }
 }

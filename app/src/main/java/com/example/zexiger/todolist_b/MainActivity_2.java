@@ -20,11 +20,19 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
+
 public class MainActivity_2 extends AppCompatActivity {
 
     private static boolean isAll=false;//是否全选
     private TextView checked_num;
     private ItemInit_2 itemInit_2;
+
+    private Button button;//删除
+    private Button button_2;//全选，取消全选
+    private Button button_3;//取消
+    private View view;
+    private Context context;
 
     private String id;
 
@@ -37,24 +45,25 @@ public class MainActivity_2 extends AppCompatActivity {
         Intent intent=getIntent();
         id=intent.getStringExtra("id");
 
-       View view = getWindow().getDecorView();
-       Context context =getApplicationContext();
+        view = getWindow().getDecorView();
+        context =getApplicationContext();
 
         itemInit_2=new ItemInit_2(view,context,id);
-        itemInit_2.refresh();
+        itemInit_2.inits();
 
-        Button button=findViewById(R.id.button_delete);
-        final Button button_2=findViewById(R.id.button_all);
-        Button button_3=findViewById(R.id.button_cancle);
+        button=findViewById(R.id.button_delete);
+        button_2=findViewById(R.id.button_all);
+        button_3=findViewById(R.id.button_cancle);
 
         //刪除
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataSupport.deleteAll(Contents.class,"Checked = ?","false");
-                itemInit_2.refresh();
                 button_2.setText("全选");
                 checked_num.setText("选择项目");
+                //对于Boolean的删除查找以及修改，需要注意
+                DataSupport.deleteAll(Contents.class,"Checked=?","1");
+                itemInit_2.refreshAll();
             }
         });
 
@@ -74,7 +83,7 @@ public class MainActivity_2 extends AppCompatActivity {
                     button_2.setText("全选");
                 }
                 itemInit_2.itemSetChecked(isAll);
-                itemInit_2.refresh();
+                itemInit_2.refreshAll();
             }
         });
 
@@ -82,7 +91,8 @@ public class MainActivity_2 extends AppCompatActivity {
         button_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemInit_2.toMainActivity();
+                adapterobj.refreshAll();
+                finish();
             }
         });
     }

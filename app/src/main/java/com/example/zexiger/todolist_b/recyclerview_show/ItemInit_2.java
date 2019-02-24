@@ -23,7 +23,7 @@ public class ItemInit_2 {
 
     private SwipeRecyclerView swipeRecyclerView;
     private LinearLayoutManager layoutManager;
-    private ItemAdapter_2 itemAdapter_2;
+    private ItemAdapter_2 adapter;
 
     private List<Contents> list;
 
@@ -33,64 +33,34 @@ public class ItemInit_2 {
         this.id=id;
     }
 
-    public List<Contents> get_list(String id){
-        List<Contents> list_1;
-        List<Contents> list_2;
-        List<Contents> list_3;
-        List<Contents> list_all=new ArrayList<>();
-        list_1 = DataSupport.where("id_string=?and level=?",id,"1").find(Contents.class);
-        list_2 = DataSupport.where("id_string=?and level=?",id,"2").find(Contents.class);
-        list_3 = DataSupport.where("id_string=?and level=?",id,"3").find(Contents.class);
-
-        for(int i=list_3.size()-1;i>=0;i--){
-            list_all.add(list_3.get(i));
-        }
-        for(int i=list_2.size()-1;i>=0;i--){
-            list_all.add(list_2.get(i));
-        }
-        for(int i=list_1.size()-1;i>=0;i--){
-            list_all.add(list_1.get(i));
-        }
-        return list_all;
+    public void inits(){
+        swipeRecyclerView=view.findViewById(R.id.srv_show_2);
+        adapter=new ItemAdapter_2(view,context,id);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(context);
+        swipeRecyclerView.setLayoutManager(layoutManager);
+        swipeRecyclerView.setAdapter(adapter);
     }
 
     public void itemSetChecked(boolean isAll){
-        list=get_list(id);
+        list=adapter.get_list(id);
         int size=list.size();
         for(int i=0;i<size;i++){
+            Contents item=list.get(i);
             if(isAll){
                 //true
-                Contents item=list.get(i);
                 item.setChecked(true);
                 item.updateAll("date=?",item.getDate());
             }else{
                 //false
-                Contents item=list.get(i);
                 item.setToDefault("Checked");
                 item.updateAll("date=?",item.getDate());
             }
         }
+        refreshAll();
     }
 
-    public void refresh(){
-        list=get_list(id);
-        swipeRecyclerView=view.findViewById(R.id.srv_show_2);
-        layoutManager=new LinearLayoutManager(context);
-        itemAdapter_2=new ItemAdapter_2(view,context,list);
-        swipeRecyclerView.setLayoutManager(layoutManager);
-        swipeRecyclerView.setAdapter(itemAdapter_2);
+    public void refreshAll(){
+        adapter.notifyAdapter();
     }
 
-    public void toMainActivity(){
-        list=get_list(id);
-        for(int i=0;i<list.size();i++){
-            Contents item=list.get(i);
-            String date=item.getDate();
-            item.setToDefault("Checked");
-            item.updateAll("date=?",date);
-        }
-        Intent intent_2=new Intent(context,MainActivity.class);
-        intent_2.putExtra("id",id);
-        context.startActivity(intent_2);
-    }
 }

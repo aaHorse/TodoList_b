@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private String id;
 
-    private static com.example.zexiger.todolist_b.recyclerview_show.ItemInit adapterobj;
+    public static com.example.zexiger.todolist_b.recyclerview_show.ItemInit adapterobj;
     private static com.example.zexiger.todolist_b.recyclerview.ItemInit adapterobj_2;
 
     public String getId() {
@@ -100,25 +100,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(MainActivity.this,Add_content.class);
                 intent.putExtra("id",id);
                 intent.putExtra("flag",1);
-                startActivityForResult(intent,2);
+                startActivity(intent);
             }
         });
 
         //显示list界面
         adapterobj=new com.example.zexiger.todolist_b.recyclerview_show.ItemInit(cv,context,id);
         adapterobj.initItems();
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d("ttttt","在这!!!");
-        Contents contents=(Contents)data.getSerializableExtra("user");
-        if(contents!=null){
-            adapterobj.refresh();
-        }else{
-            Toast.makeText(MainActivity.this,"添加取消",Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -164,9 +152,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    public static void mainActivity_refresh(){
-        adapterobj.refresh();
-    }
-
 }

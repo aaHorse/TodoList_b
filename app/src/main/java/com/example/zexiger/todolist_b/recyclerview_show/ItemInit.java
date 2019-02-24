@@ -34,9 +34,7 @@ public class ItemInit {
     private View view;
     private Context context;
     private String id;
-
     private ItemAdapter adapter;
-    private List<Contents>list;
     private SwipeRecyclerView swipeRecyclerView;
 
     /*
@@ -52,7 +50,6 @@ public class ItemInit {
         /*
         * 获得当前id对应的item，在这个函数会进行排列
         * */
-        list= get_list(id);
        swipeRecyclerView=(SwipeRecyclerView)view.findViewById(R.id.rv_show);
         if (true){
             //点击
@@ -88,53 +85,20 @@ public class ItemInit {
                 }
             });
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-            adapter=new ItemAdapter(context,list);
+            adapter=new ItemAdapter(context,id);
             swipeRecyclerView.setLayoutManager(layoutManager);
             swipeRecyclerView.setAdapter(adapter);
         }
     }
 
-    public void refresh(){
-        List<Contents>list= get_list(id);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        ItemAdapter adapter=new ItemAdapter(context,list);
-        swipeRecyclerView.setLayoutManager(layoutManager);
-        swipeRecyclerView.setAdapter(adapter);
-        Log.d("ttttt","在这哈哈哈哈3");
-    }
-
     /*
-    * 将list翻转，主要是因为需要在显示的时候，按照距离最近的编辑时间优先显示
-    * */
-    public List<Contents> get_list(String id){
-        List<Contents> list_1;
-        List<Contents> list_2;
-        List<Contents> list_3;
-        List<Contents> list_all=new ArrayList<>();
-        list_1 = DataSupport.where("id_string=?and level=?",id,"1").find(Contents.class);
-        list_2 = DataSupport.where("id_string=?and level=?",id,"2").find(Contents.class);
-        list_3 = DataSupport.where("id_string=?and level=?",id,"3").find(Contents.class);
-
-        for(int i=list_3.size()-1;i>=0;i--){
-            list_all.add(list_3.get(i));
-        }
-        for(int i=list_2.size()-1;i>=0;i--){
-            list_all.add(list_2.get(i));
-        }
-        for(int i=list_1.size()-1;i>=0;i--){
-            list_all.add(list_1.get(i));
-        }
-        return list_all;
-    }
-
-    /*
-    * 点击修改逻辑后，跳转到编辑菜单
+    * 点击修改逻辑(包括点击修改，点击整个item)后，跳转到编辑菜单
     * */
     private void edit(int position){
         Intent intent=new Intent(context,Add_content.class);
         intent.putExtra("id",id);
         intent.putExtra("flag",0);
-        intent.putExtra("context_id",list.get(position).getDate());
+        intent.putExtra("context_id",adapter.getList().get(position).getDate());
         context.startActivity(intent);
     }
 
@@ -184,15 +148,13 @@ public class ItemInit {
     * */
     public void mySetMenuItemListener(SwipeMenuBridge menuBridge, int position){
         menuBridge.closeMenu();
-        list= get_list(id);
         int direction=menuBridge.getDirection();
         if(direction==SwipeRecyclerView.LEFT_DIRECTION){
             //左侧菜单
             int menu_position=menuBridge.getPosition();
             Log.d("ttttt","item的position为");
             Log.d("ttttt","item的position为"+position);
-            Log.d("ttttt","list的size为"+list.size());
-            Contents item=list.get(position);
+            Contents item=adapter.getList().get(position);
             String str=item.getDate();
             switch (menu_position){
                 case 0:
@@ -211,7 +173,8 @@ public class ItemInit {
             }
             //修改数据库item对应的Done
             item.updateAll("date=?",str);
-            refresh();
+            //刷新adapter,是否已完成
+            adapter.notifyAdapter(true);
             Toast.makeText(context,"点击了左菜单",Toast.LENGTH_SHORT).show();
         }else if(direction==SwipeRecyclerView.RIGHT_DIRECTION){
             //右侧菜单
@@ -221,10 +184,11 @@ public class ItemInit {
                     edit(position);
                     break;
                 case 1:
-                    Contents item=list.get(position);
+                    Contents item=adapter.getList().get(position);
                     String date_id=item.getDate();
                     DataSupport.deleteAll(Contents.class,"date = ?",date_id);
-                    refresh();
+                    //刷新adapter,删除单个item
+                    adapter.notifyAdapter(true);
                     break;
                 default:
                     Log.d("ttttt","侧滑菜单有问题");
@@ -233,5 +197,13 @@ public class ItemInit {
             //其他
             Log.d("ttttt","滑动菜单的左右出错");
         }
+    }
+
+    /*
+    * 添加一个item,因为涉及到优先级的问题，所以直接重新从数据库中获取list
+    * 刷新全部，因为编辑一个item后，会进行添加和删除
+    * */
+    public void refreshAll(){
+        adapter.notifyAdapter(true);
     }
 }
