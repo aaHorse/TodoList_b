@@ -38,7 +38,7 @@ import static com.example.zexiger.todolist_b.MainActivity.adapterobj;
 *
 * 以下通过Intent传参数的方法作为区分
 * Intent将传两个参数，第一个参数：字符串"MainActivity"  "Search_Result" ,intent提取:"activity"
-* 第二个参数：int类型 1  2  ，1表示点击item，2表示点击了修改，intent提取:"flag"
+* 第二个参数：int类型 1  2  ，1表示点击item，2表示点击了修改，3表示点击＋号，intent提取:"flag"
 * */
 public class Add_content extends AppCompatActivity {
     private String id;
@@ -65,17 +65,14 @@ public class Add_content extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_content);
-
         editText=(LinesEditView)findViewById(R.id.et_add);
         button=(Button)findViewById(R.id.bt_add);
         button_2=(Button)findViewById(R.id.back) ;
         button_3=(ImageButton)findViewById(R.id.delete_input);
         button_4=(ImageButton)findViewById(R.id.input_done);
         mRatingBar = (RatingBar) findViewById(R.id.ratingbar);
-
         editText.setContentTextSize(80);
         editText.setContentTextColor(Color.parseColor("#000000"));
-
         Intent intent=getIntent();
         flag=intent.getIntExtra("flag",-1);
         activity=intent.getStringExtra("activity");

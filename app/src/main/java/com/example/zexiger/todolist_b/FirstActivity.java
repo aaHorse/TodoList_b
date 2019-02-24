@@ -103,7 +103,6 @@ public class FirstActivity extends AppCompatActivity {
                 mIUiListener = new BaseUiListener();
                 //all表示获取所有权限
                 mTencent.login(FirstActivity.this,"all", mIUiListener);
-                Log.d("ttttt","hhhhhhh1");
             }
         });
 
@@ -144,12 +143,11 @@ public class FirstActivity extends AppCompatActivity {
                 mUserInfo.getUserInfo(new IUiListener() {
                     @Override
                     public void onComplete(Object response) {
-                        //Log.d("ttttt","登录成功"+response.toString());
                         JSONObject jsonObject=(JSONObject)response;
                         initOpenidAndToken(jsonObject);
                         getUserInfo();
                     }
-                    ////////////////////////////////////////////////////////////////////////////////
+
                     public void initOpenidAndToken(JSONObject jsonObject) {
                         try {
                             String openid = jsonObject.getString("openid");
@@ -168,7 +166,6 @@ public class FirstActivity extends AppCompatActivity {
                         @Override
                         public void handleMessage(Message msg) {
                             super.handleMessage(msg);
-
                             ////获取昵称
                             if (msg.what == 0) {
                                 user_name=(String) msg.obj;

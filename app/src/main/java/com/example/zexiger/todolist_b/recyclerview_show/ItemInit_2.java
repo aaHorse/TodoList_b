@@ -1,19 +1,12 @@
 package com.example.zexiger.todolist_b.recyclerview_show;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.example.zexiger.todolist_b.LitePal_general.Contents;
-import com.example.zexiger.todolist_b.MainActivity;
-import com.example.zexiger.todolist_b.MainActivity_2;
 import com.example.zexiger.todolist_b.R;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
-
-import org.litepal.crud.DataSupport;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemInit_2 {

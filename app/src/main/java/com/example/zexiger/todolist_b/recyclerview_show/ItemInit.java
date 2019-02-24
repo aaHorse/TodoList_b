@@ -90,7 +90,6 @@ public class ItemInit {
             swipeRecyclerView.setOnItemLongClickListener(new OnItemLongClickListener() {
                 @Override
                 public void onItemLongClick(View itemView, int position) {
-                    Log.d("ttttt","长按按钮触动");
                     Toast.makeText(context,"长按按钮触动",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context,MainActivity_2.class);
                     intent.putExtra("id",id);
@@ -103,7 +102,7 @@ public class ItemInit {
                 }
             });
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-            adapter=new ItemAdapter(context,id);
+            adapter=new ItemAdapter(context,id,activity);
             swipeRecyclerView.setLayoutManager(layoutManager);
             swipeRecyclerView.setAdapter(adapter);
         }
@@ -176,17 +175,13 @@ public class ItemInit {
         if(direction==SwipeRecyclerView.LEFT_DIRECTION){
             //左侧菜单
             int menu_position=menuBridge.getPosition();
-            Log.d("ttttt","item的position为");
-            Log.d("ttttt","item的position为"+position);
             Contents item=adapter.getList().get(position);
             String str=item.getDate();
             switch (menu_position){
                 case 0:
-                    Log.d("ttttt","左边case0");
                     item.setDone(true);
                     break;
                 case 1:
-                    Log.d("ttttt","左边case1");
                     /*
                      * LitePal对默认值不予以更新，需要采用这种方式
                      * */
@@ -198,8 +193,7 @@ public class ItemInit {
             //修改数据库item对应的Done
             item.updateAll("date=?",str);
             //刷新adapter,是否已完成
-            adapter.notifyAdapter(true);
-            Toast.makeText(context,"点击了左菜单",Toast.LENGTH_SHORT).show();
+            refreshAll();
         }else if(direction==SwipeRecyclerView.RIGHT_DIRECTION){
             //右侧菜单
             int menu_position=menuBridge.getPosition();
@@ -212,7 +206,7 @@ public class ItemInit {
                     String date_id=item.getDate();
                     DataSupport.deleteAll(Contents.class,"date = ?",date_id);
                     //刷新adapter,删除单个item
-                    adapter.notifyAdapter(true);
+                    refreshAll();
                     break;
                 default:
                     Log.d("ttttt","侧滑菜单有问题");
@@ -228,6 +222,6 @@ public class ItemInit {
     * 刷新全部，因为编辑一个item后，会进行添加和删除
     * */
     public void refreshAll(){
-        adapter.notifyAdapter(true);
+        adapter.notifyAdapter(activity);
     }
 }

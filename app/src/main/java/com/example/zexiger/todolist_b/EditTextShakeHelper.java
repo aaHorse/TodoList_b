@@ -8,6 +8,12 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 
+
+
+/*
+*
+* 这一个类是copy网上的，主要实现注册时，两次输入的密码不一致，手机将发生震动
+* */
 public class EditTextShakeHelper {
 
     // 震动动画

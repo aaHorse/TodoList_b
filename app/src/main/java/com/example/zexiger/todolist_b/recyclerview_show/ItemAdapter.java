@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zexiger.todolist_b.LitePal_general.Contents;
+import com.example.zexiger.todolist_b.LitePal_general.Search_result;
 import com.example.zexiger.todolist_b.R;
 
 import org.litepal.crud.DataSupport;
@@ -21,13 +22,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    private List<Contents> list;
+    private List<Contents> list=new ArrayList<>();
     private Context context;
     private String id;
+    private String activity;
 
-    public ItemAdapter(Context context,String id){
+    public ItemAdapter(Context context,String id,String activity){
         this.id=id;
-        this.list=get_list(id);
+        this.activity=activity;
+        if (activity.equals("MainActivity")) {
+            this.list=get_list(id);
+        } else if(activity.equals("Search_result")){
+            this.list=Search_result.getList();
+        }else{
+            Log.d("ttttt","找不到匹配的activity");
+        }
         this.context=context;
     }
 
@@ -64,7 +73,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             viewHolder.textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             viewHolder.textView.getPaint().setAntiAlias(true);
         }else{
-            Log.d("ttttt","item.isDone=false");
             viewHolder.textView.getPaint().setFlags(0);
         }
     }
@@ -78,14 +86,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     * 以下代码实现批量删除操作
     * @parameter flag 是否进行了删除操作
     * */
-    public void notifyAdapter(boolean flag) {
+    public void notifyAdapter(String activity) {
         //在这里还没有体现出差别，等到代码实现后进行完善
-        if (flag) {
+        if (activity.equals("MainActivity")) {
             //如果进行了
             this.list=get_list(id);
-        } else {
+        } else if(activity.equals("Search_Result")){
             //如果list没有发生改变
-            this.list=get_list(id);
+            this.list=Search_result.getList();
         }
         notifyDataSetChanged();
     }

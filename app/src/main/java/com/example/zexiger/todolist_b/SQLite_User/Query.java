@@ -80,8 +80,6 @@ public class Query {
             do{
                 id=cursor.getString(cursor.getColumnIndex("user_id"));
                 name=cursor.getString(cursor.getColumnIndex("name"));
-                Log.d("ttttt",id);
-                Log.d("ttttt",name);
             }while(cursor.moveToNext());
         }
         cursor.close();

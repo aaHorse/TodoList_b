@@ -76,6 +76,7 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
         if (item.isDone()){
             viewHolder.textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
+
         if(item.isChecked()){
             viewHolder.checkBox.setChecked(true);
         }

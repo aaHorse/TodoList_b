@@ -1,21 +1,9 @@
 
-
-
-
-
-
 /*
 * 用碎片实现QQ第三方登录出现不能解决的问题
 * 改用在FirstActivity中实现第三方登录
 *
 * */
-
-
-
-
-
-
-
 /*
 package com.example.zexiger.todolist_b.QQ_register;
 
