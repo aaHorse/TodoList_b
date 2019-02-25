@@ -41,7 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
                 int position=viewHolder.getAdapterPosition();
                 switch(position){
                     case 0:
-                        Toast.makeText(v.getContext(),""+1,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(),"(=^@^=)",Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

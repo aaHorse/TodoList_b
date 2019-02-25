@@ -89,6 +89,12 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(activityToolbar);
 
         /*
+        * 设置状态栏
+        * */
+        StatusBarFontUtil.setStatusBarColor(1,this);
+
+
+        /*
         * 搜索框
         * */
         searchView();
@@ -103,6 +109,10 @@ public class MainActivity extends BaseActivity {
         adapterobj_2=new com.example.zexiger.todolist_b.recyclerview.ItemInit();
         adapterobj_2.initItems(cv,context);
 
+
+        /*
+        * 悬浮的加号按钮，添加item
+        * */
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +155,11 @@ public class MainActivity extends BaseActivity {
         searchView.setHistoryItemClickListener(new SearchView.OnHistoryItemClickListener() {
             @Override
             public void onClick(String historyStr, int position) {
-                Toast.makeText(MainActivity.this, historyStr, Toast.LENGTH_SHORT).show();
+                searchView.close();
+                Intent intent=new Intent(MainActivity.this,Search_result.class);
+                intent.putExtra("searchText",historyStr);
+                intent.putExtra("id",id);
+                startActivity(intent);
             }
         });
 

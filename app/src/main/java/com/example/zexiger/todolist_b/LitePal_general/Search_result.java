@@ -73,4 +73,13 @@ public class Search_result extends BaseActivity {
         Log.d("ttttt","查询到"+list.size()+"个");
         return list;
     }
+
+    /*
+     * 点击手机返回键
+     * */
+    @Override
+    public void onBackPressed() {
+        adapterobj.refreshAll();
+        super.onBackPressed();
+    }
 }

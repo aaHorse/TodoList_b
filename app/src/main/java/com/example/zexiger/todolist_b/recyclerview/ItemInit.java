@@ -14,11 +14,17 @@ import com.example.zexiger.todolist_b.R;;
 public class ItemInit {
     private List<Item> list=new ArrayList<>();
     public void initItems(View view, final Context context){
-        for(int i=1;i<11;i++){
-            Item item=new Item();
-            item.setName("功能");
-            list.add(item);
-        }
+        //初始化
+        Item item=new Item();
+        item.setName("哈哈哈哈哈");
+        list.add(item);
+        Item item_2=new Item();
+        item_2.setName("设置");
+        list.add(item_2);
+        Item item_3=new Item();
+        item_3.setName("关于");
+        list.add(item_3);
+
         RecyclerView recyclerView= view.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);

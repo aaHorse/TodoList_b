@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class MainActivity_2 extends BaseActivity {
 
         Intent intent=getIntent();
         id=intent.getStringExtra("id");
+        activity=intent.getStringExtra("activity");
+        Log.d("ttttt","activity:"+activity);
 
         view = getWindow().getDecorView();
         context =getApplicationContext();
@@ -98,11 +101,34 @@ public class MainActivity_2 extends BaseActivity {
                 item.updateAll("id_string=?",id);
                 if(activity.equals("MainActivity")){
                     adapterobj.refreshAll();
-                }else if(activity.equals("Search_Result")){
+                }else if(activity.equals("Search_result")){
                     itemInit.refreshAll();
+                }else{
+                    Log.d("ttttt","无匹配的activity");
                 }
                 finish();
+                /*
+                * 解决跳转闪屏问题解决，原因是activity忘记赋值，比较没有else，导致找不到匹配的refresh
+                * */
             }
         });
+    }
+
+    /*
+     * 点击手机返回键
+     * */
+    @Override
+    public void onBackPressed() {
+        Contents item=new Contents();
+        item.setToDefault("Checked");
+        item.updateAll("id_string=?",id);
+        if(activity.equals("MainActivity")){
+            adapterobj.refreshAll();
+        }else if(activity.equals("Search_result")){
+            itemInit.refreshAll();
+        }else{
+            Log.d("ttttt","无匹配的activity");
+        }
+        super.onBackPressed();
     }
 }
