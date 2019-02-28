@@ -90,18 +90,4 @@ public class Create_user extends BaseActivity {
             }
         }).start();
     }
-
-/*    private void init_id(){
-        SharedPreferences sharedPreferences=getSharedPreferences("id_file",MODE_PRIVATE);
-       id=sharedPreferences.getInt("id",-100);
-
-       //取出id后，马上进行加1，再重新存进去
-       int id_2=id;
-       id_2++;
-       SharedPreferences.Editor editor=sharedPreferences.edit();
-       editor.clear();
-       editor.putInt("id",id_2);
-       editor.putBoolean("flag",false);
-       editor.apply();
-    }*/
 }

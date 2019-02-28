@@ -14,6 +14,8 @@ import com.example.zexiger.todolist_b.R;
 
 
 public class Succeed extends BaseActivity {
+    private String user_id;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +29,6 @@ public class Succeed extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.back);
         }
-        String user_id;
-        String name;
         Intent intent=getIntent();
         name=intent.getStringExtra("user_name");
         user_id=intent.getStringExtra("user_id");
@@ -42,9 +42,30 @@ public class Succeed extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-            Intent intent=new Intent(Succeed.this,FirstActivity.class);
-            startActivity(intent);
+            jump();
         }
         return true;
+    }
+
+    /*
+     * 点击手机返回键
+     * */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        jump();
+    }
+
+    /*
+    * 在Succeed.java活动，跳转到登录界面FirstActivity.java
+    * 使用Bundle传数据，传的数据为注册成功界面分配的账号，该数据将把登录界面的账号那里setText
+    * */
+    private void jump(){
+        Bundle bundle=new Bundle();
+        bundle.putString("user_id",user_id);
+        Intent intent=new Intent();
+        intent.setClass(Succeed.this,FirstActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

@@ -62,7 +62,7 @@
             android:layout_toRightOf="@id/viewName"
             android:background="@null"
             android:ems="19"
-            android:hint="  用户名"
+            android:hint="  账号"
             android:textColorHint="@color/colorCursor"
             android:textCursorDrawable="@drawable/color_cursor"
             android:textSize="15sp" />
