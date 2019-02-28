@@ -178,7 +178,10 @@ public class MainActivity extends BaseActivity {
     }
 
 
-//声明一个long类型变量：用于存放上一点击“返回键”的时刻
+    /*
+    * 点击两次退出功能
+    * 声明一个long类型变量：用于存放上一点击“返回键”的时刻
+    * */
     private long mExitTime;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

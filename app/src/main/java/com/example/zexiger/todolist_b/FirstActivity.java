@@ -180,7 +180,6 @@ public class FirstActivity extends BaseActivity {
                             if (msg.what == 0) {
                                 user_name=(String) msg.obj;
                                 Log.d("ttttt", "获取昵称--->" + (CharSequence)msg.obj);
-                                Users user=new Users(FirstActivity.this,"users.db",null,1);
                                 /* 如果该QQ以前在这里用过QQ登录，则不写数据库，
                                  * 如果是新用户，则进行SQLite数据库的写入
                                  * */
@@ -193,24 +192,25 @@ public class FirstActivity extends BaseActivity {
                                     new Thread(new Runnable(){
                                         public void run(){
                                             id=DBUtils.get_mysql_id();
+                                            //新用户
+                                            Log.d("ttttt","新用户");
+                                            Users user=new Users(FirstActivity.this,"users.db",null,1);
+                                            SQLiteDatabase db=user.getWritableDatabase();
+                                            ContentValues values=new ContentValues();
+                                            String user_id="QQ"+id;
+                                            values.put("user_id",user_id);
+                                            values.put("name",user_name);
+                                            values.put("password","00000000");//与general注册用户对齐
+                                            db.insert("User",null,values);
+
+                                            //
+                                            Query.print_all(getWindow().getContext());
+
+                                            Intent intent=new Intent(FirstActivity.this,MainActivity.class);
+                                            intent.putExtra("id",user_id);
+                                            startActivity(intent);
                                         }
                                     }).start();
-                                    //新用户
-                                    Log.d("ttttt","新用户");
-                                    SQLiteDatabase db=user.getWritableDatabase();
-                                    ContentValues values=new ContentValues();
-                                    String user_id="QQ"+id;
-                                    values.put("user_id",user_id);
-                                    values.put("name",user_name);
-                                    values.put("password","00000000");//与general注册用户对齐
-                                    db.insert("User",null,values);
-
-                                    //
-                                    Query.print_all(getWindow().getContext());
-
-                                    Intent intent=new Intent(FirstActivity.this,MainActivity.class);
-                                    intent.putExtra("id",user_id);
-                                    startActivity(intent);
                                 }else{
                                     Log.d("ttttt","二次登录");
                                     //二次使用QQ登录的用户，需要通过名字去获取对应的数据库user_id
@@ -268,7 +268,6 @@ public class FirstActivity extends BaseActivity {
                     @Override
                     public void onCancel() {
                         Log.d("ttttt","登录取消");
-
                     }
                 });
             } catch (JSONException e) {

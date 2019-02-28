@@ -38,6 +38,20 @@
 
             </android.support.design.widget.AppBarLayout>
 
+            <LinearLayout
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:layout_width="50dp"
+                android:layout_height="?attr/actionBarSize">
+
+                <View
+                    android:background="@drawable/search"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </LinearLayout>
+
             <View
                 android:background="#E3E3E3"
                 android:id="@+id/bbb"
