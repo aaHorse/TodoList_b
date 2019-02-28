@@ -48,6 +48,12 @@ public class FirstActivity extends BaseActivity {
     private Button button_2;//注册按钮
     //登录按钮写到了另外一个类中     Sign_in_general.sign_in(view,context);
 
+    private View view;
+    private Context context;
+
+    /*
+    * QQ登录
+    * */
     private static final String APP_ID = "1108179346";//官方获取的APPID
     private Tencent mTencent;
     private BaseUiListener mIUiListener;
@@ -57,8 +63,8 @@ public class FirstActivity extends BaseActivity {
 
     /*
     * 用于给QQ登录的用户分配id，
-    * 采用SharedPreferences文件进行存储，
-    * 和general登录共用同一个SharedPreferences文件
+    * 使用MySQL上面的数据进行初始化
+    * 和general登录共用同一个MySQL数据库上面的表
     * id在这里为负数，在后面会被初始化为正数
     * */
     private int id=-100;
@@ -69,24 +75,14 @@ public class FirstActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-        final View view = getWindow().getDecorView();
-        final Context context=getApplicationContext();
+        view = getWindow().getDecorView();
+        context=getApplicationContext();
 
         //QQ登录按钮
         button=(ImageButton) findViewById(R.id.ib_QQ);
+        //记住密码CheckBox
         remember=(CheckBox)findViewById(R.id.cb_checkbox);
 
-        /*
-        * 第一次初始化存用于给用户分配id的SharedPreferences文件，
-        * 将里面的id初始化为1
-        * */
-        SharedPreferences sharedPreferences=getSharedPreferences("id_file",MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("flag",true)){
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-            editor.putInt("id",1);
-            editor.putBoolean("flag",false);
-            editor.apply();
-        }
 
         //如果之前按了记住密码，在这里将登录界面显示出来
         SharedPreferences  preferences=PreferenceManager.getDefaultSharedPreferences(this);
@@ -176,9 +172,15 @@ public class FirstActivity extends BaseActivity {
                                  * */
                                 //使用name做检查，如果QQ出现重名，这个方法将引发错误，在这里忽略这个bug，
                                 //仍然使用name做唯一性检查
-                                init_id();
                                 if(!Query.query_have(user_name,getWindow().getContext())){
-                                    id_add();
+                                    /*
+                                    *确定要增加用户之后，打开MySQL数据库拿到id编号
+                                    * */
+                                    new Thread(new Runnable(){
+                                        public void run(){
+                                            id=DBUtils.get_mysql_id();
+                                        }
+                                    }).start();
                                     //新用户
                                     Log.d("ttttt","新用户");
                                     SQLiteDatabase db=user.getWritableDatabase();
@@ -203,7 +205,9 @@ public class FirstActivity extends BaseActivity {
                                     Query.print_all(getWindow().getContext());
 
                                     Intent intent=new Intent(FirstActivity.this,MainActivity.class);
+                                    //开SQLite数据库，找到对应的user_id
                                     String user_id=Query.get_id(user_name,getWindow().getContext());
+
                                     intent.putExtra("id",user_id);
                                     startActivity(intent);
                                 }
@@ -213,7 +217,7 @@ public class FirstActivity extends BaseActivity {
 
 
                     public void getUserInfo() {
-                        //sdk给我们提供了一个类UserInfo，这个类中封装了QQ用户的一些信息，我么可以通过这个类拿到这些信息
+                        //sdk给我们提供了一个类UserInfo，这个类中封装了QQ用户的一些信息，我们可以通过这个类拿到这些信息
                         QQToken mQQToken = mTencent.getQQToken();
                         UserInfo userInfo = new UserInfo(FirstActivity.this, mQQToken);
                         userInfo.getUserInfo(new IUiListener() {
@@ -287,19 +291,5 @@ public class FirstActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("ttttt","跑到下面来了！！！");
     }
-
-    private void init_id(){
-        SharedPreferences sharedPreferences=getSharedPreferences("id_file",MODE_PRIVATE);
-        id=sharedPreferences.getInt("id",-100);
-    }
-    private void id_add(){
-        SharedPreferences sharedPreferences=getSharedPreferences("id_file",MODE_PRIVATE);
-        int id_2=sharedPreferences.getInt("id",-100);
-        id_2++;
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.clear();
-        editor.putInt("id",id_2);
-        editor.putBoolean("flag",false);
-        editor.apply();
-    }
+    
 }

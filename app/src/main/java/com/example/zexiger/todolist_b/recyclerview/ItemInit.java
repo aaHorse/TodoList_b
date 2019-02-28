@@ -28,7 +28,7 @@ public class ItemInit {
         RecyclerView recyclerView= view.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        ItemAdapter adapter=new ItemAdapter(list);
+        ItemAdapter adapter=new ItemAdapter(context,list);
         recyclerView.setAdapter(adapter);
     }
 }

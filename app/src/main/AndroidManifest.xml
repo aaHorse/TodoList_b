@@ -22,9 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".MainActivity" />
-
         <activity android:name=".LitePal_general.Add_content" />
         <activity android:name=".LitePal_general.Create_user" />
 
@@ -51,7 +49,8 @@
             android:name=".LitePal_general.Succeed"
             android:label="注册成功" />
         <activity android:name=".MainActivity_2" />
-        <activity android:name=".LitePal_general.Search_result"></activity>
+        <activity android:name=".LitePal_general.Search_result" />
+        <activity android:name=".About"></activity>
     </application>
 
 </manifest>

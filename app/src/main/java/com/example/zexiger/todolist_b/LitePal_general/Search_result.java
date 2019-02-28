@@ -35,6 +35,7 @@ public class Search_result extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result);
+
         toolbar=(Toolbar)findViewById(R.id.toolbar_3);
         toolbar.setTitle("搜索结果");
         toolbar.setTitleTextColor(Color.parseColor("#000000"));
@@ -42,6 +43,7 @@ public class Search_result extends BaseActivity {
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.back);
+
         view = getWindow().getDecorView();
         context=getApplicationContext();
 
