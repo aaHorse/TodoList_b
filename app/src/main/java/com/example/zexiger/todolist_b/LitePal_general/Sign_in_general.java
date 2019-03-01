@@ -33,17 +33,20 @@ public class Sign_in_general {
         text_id=(EditText) view.findViewById(R.id.et_userName);
         text_password=(EditText)view.findViewById(R.id.et_password);
 
+        /*
+        * 点击登录
+        * */
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //如果勾选了记住密码，在这里将信息进行存储
-                boolean isChecked=checkBox.isChecked();
                 String id=text_id.getText().toString();
                 String password=text_password.getText().toString();
                 if(checkInput(id,password,context)){
-                    if (isChecked){
-                        save(view,context);
-                    }
+                    /*
+                    * 点击登录后，保存记住密码按钮的状态
+                    * */
+                    save(view,context);
+
                     right_id=id;
                     Intent intent=new Intent(context,MainActivity.class);
                     intent.putExtra("id",id);
@@ -96,18 +99,23 @@ public class Sign_in_general {
     * 对勾选了记住密码的用户进行信息存储
     * */
     public static void save(final View view,Context context){
-        text_id=(EditText) view.findViewById(R.id.et_userName);
-        text_password=(EditText)view.findViewById(R.id.et_password);
+        //如果勾选了记住密码，在这里将信息进行存储
+        boolean isChecked=checkBox.isChecked();
 
         SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor=sharedPreferences.edit();
 
         editor.clear();
 
-        editor.putBoolean("remember_password",true);
-        editor.putString("user_id",text_id.getText().toString());
-        editor.putString("user_password",text_password.getText().toString());
-
+        //如果勾选了记住密码
+        if(isChecked){
+            editor.putBoolean("remember_password",true);
+            editor.putString("user_id",text_id.getText().toString());
+            editor.putString("user_password",text_password.getText().toString());
+        }else{
+            //如果没有勾选记住密码
+            editor.putBoolean("remember_password",false);
+        }
         editor.apply();
     }
 }
