@@ -94,8 +94,8 @@ public class FirstActivity extends BaseActivity {
             if(!str.isEmpty()){
                 Log.d("ttttt","字符串为："+str);
                 editText.setText(str);
-                bundle.clear();
             }
+            bundle.clear();
         }
 
         //如果之前按了记住密码，在这里将登录界面显示出来
