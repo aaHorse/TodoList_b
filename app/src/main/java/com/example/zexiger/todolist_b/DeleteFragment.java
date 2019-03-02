@@ -48,7 +48,30 @@ public class DeleteFragment extends Fragment {
         button=view.findViewById(R.id.button_delete);
         button_2=view.findViewById(R.id.button_all);
         button_3=view.findViewById(R.id.button_cancle);
+        return view;
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        activity=getActivity();
+        if(activity.findViewById(R.id.activity_main_2_1_fragment)!=null){
+            activity_2_1=(MainActivity_2_1)activity;
+            activity_str=activity_2_1.getActivity_str();
+            id=activity_2_1.getId();
+        }else if(activity.findViewById(R.id.activity_main_2_2_fragment)!=null){
+            activity_2_2=(MainActivity_2_2)activity;
+            activity_str=activity_2_2.getActivity_str();
+            id=activity_2_2.getId();
+        }else{
+            Toast.makeText(activity,"比较出错",Toast.LENGTH_SHORT).show();
+        }
+        itemInit_2=new ItemInit_2(view,activity,id,activity_str);
+        itemInit_2.inits();
+        func();
+    }
+
+    public void func(){
         //刪除
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,33 +121,10 @@ public class DeleteFragment extends Fragment {
                     Log.d("ttttt","无匹配的activity");
                 }
                 /*
-                * 通过调用父类活动中的方法来销毁当前的碎片
-                * 解决跳转闪屏问题解决，原因是activity忘记赋值，比较没有else，导致找不到匹配的refresh
-                * */
+                 * 通过调用父类活动中的方法来销毁当前的碎片
+                 * 解决跳转闪屏问题解决，原因是activity忘记赋值，比较没有else，导致找不到匹配的refresh
+                 * */
             }
         });
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        activity=getActivity();
-        if(activity.findViewById(R.id.activity_main_2_1_fragment)!=null){
-            activity_2_1=(MainActivity_2_1)activity;
-            activity_str=activity_2_1.getActivity_str();
-            id=activity_2_1.getId();
-        }else if(activity.findViewById(R.id.activity_main_2_2_fragment)!=null){
-            activity_2_2=(MainActivity_2_2)activity;
-            activity_str=activity_2_2.getActivity_str();
-            id=activity_2_2.getId();
-        }else{
-            Toast.makeText(activity,"比较出错",Toast.LENGTH_SHORT).show();
-        }
-        Log.d("ttttt","hhhhh1");
-        itemInit_2=new ItemInit_2(view,activity,id,activity_str);
-        Log.d("ttttt","hhhhh2");
-        itemInit_2.inits();
-        Log.d("ttttt","hhhhh3");
     }
 }

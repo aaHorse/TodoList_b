@@ -44,13 +44,10 @@ public class MainActivity_2_2 extends AppCompatActivity {
 
 
     /*
-     * 按了取消键销毁当前的碎片
+     * 按了取消键销毁当前的碎片和活动
      * */
     public void back(){
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.activity_main_2_2_fragment));
-        fragmentTransaction.commit();
+        finish();
     }
 
     /*
