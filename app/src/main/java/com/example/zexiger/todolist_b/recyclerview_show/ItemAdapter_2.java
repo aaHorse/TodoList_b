@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.zexiger.todolist_b.LitePal_general.Contents;
+import com.example.zexiger.todolist_b.LitePal_general.Search_result;
 import com.example.zexiger.todolist_b.R;
 
 import org.litepal.crud.DataSupport;
@@ -21,18 +23,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder> {
-    private List<Contents> list;
+    private List<Contents> list=new ArrayList<>();
     private Context context;
     private TextView checked_num;
     private View view;
     private String id;
+    /*
+    * 调用该adapter会有两种情况：
+    * 第一种：在MainActivity长按item
+    * 第二种：在搜索结果中，长按item
+    * str用于区分这两种情况
+    * */
+    private String activity_str;
 
 
-    public ItemAdapter_2(View view,Context context, String id){
+    public ItemAdapter_2(View view,Context context, String id,String str){
         this.id=id;
-        this.list=get_list(id);
+        Log.d("ttttt","error1");
+        this.activity_str=str;
+        Log.d("ttttt","error2");
         this.context=context;
+        Log.d("ttttt","error4");
         this.view=view;
+        Log.d("ttttt","|||activity:"+activity_str);
+        this.list=get_list(this.id);
+        Log.d("ttttt","error3");
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -141,7 +156,7 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
      * @parameter flag 是否进行了删除操作
      * */
     public void notifyAdapter() {
-        this.list=get_list(id);
+        list=get_list(id);
         notifyDataSetChanged();
     }
 
@@ -149,23 +164,36 @@ public class ItemAdapter_2 extends RecyclerView.Adapter<ItemAdapter_2.ViewHolder
      * 将list翻转，主要是因为需要在显示的时候，按照距离最近的编辑时间优先显示
      * */
     public List<Contents> get_list(String id){
-        List<Contents> list_1;
-        List<Contents> list_2;
-        List<Contents> list_3;
-        List<Contents> list_all=new ArrayList<>();
-        list_1 = DataSupport.where("id_string=?and level=?",id,"1").find(Contents.class);
-        list_2 = DataSupport.where("id_string=?and level=?",id,"2").find(Contents.class);
-        list_3 = DataSupport.where("id_string=?and level=?",id,"3").find(Contents.class);
+        Log.d("ttttt",activity_str);
+        if(activity_str.equals("MainActivity")){
+            Log.d("ttttt","进入了MainActivity条件里面，id为："+id);
+            List<Contents> list_1;
+            List<Contents> list_2;
+            List<Contents> list_3;
+            List<Contents> list_all=new ArrayList<>();
+            list_1 = DataSupport.where("id_string=?and level=?",id,"1").find(Contents.class);
+            list_2 = DataSupport.where("id_string=?and level=?",id,"2").find(Contents.class);
+            list_3 = DataSupport.where("id_string=?and level=?",id,"3").find(Contents.class);
 
-        for(int i=list_3.size()-1;i>=0;i--){
-            list_all.add(list_3.get(i));
+            for(int i=list_3.size()-1;i>=0;i--){
+                list_all.add(list_3.get(i));
+            }
+            for(int i=list_2.size()-1;i>=0;i--){
+                list_all.add(list_2.get(i));
+            }
+            for(int i=list_1.size()-1;i>=0;i--){
+                list_all.add(list_1.get(i));
+            }
+            Log.d("ttttt","hhhhhhhhhhh1");
+            return list_all;
+        }else if(activity_str.equals("Search_result")){
+            List<Contents> list=Search_result.getList();
+            Log.d("ttttt","hhhhhhhhhhh2");
+            return list;
+        }else{
+            Log.d("ttttt","ItemAdapter_2得到的list为空");
+            List<Contents> list=new ArrayList<>();
+            return list;
         }
-        for(int i=list_2.size()-1;i>=0;i--){
-            list_all.add(list_2.get(i));
-        }
-        for(int i=list_1.size()-1;i>=0;i--){
-            list_all.add(list_1.get(i));
-        }
-        return list_all;
     }
 }

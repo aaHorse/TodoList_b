@@ -26,14 +26,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Contents> list=new ArrayList<>();
     private Context context;
     private String id;
-    private String activity;
+    private String activity_str;
 
-    public ItemAdapter(Context context,String id,String activity){
+    public ItemAdapter(Context context,String id,String activity_str){
         this.id=id;
-        this.activity=activity;
-        if (activity.equals("MainActivity")) {
+        this.activity_str=activity_str;
+        if (activity_str.equals("MainActivity")) {
             this.list=get_list(id);
-        } else if(activity.equals("Search_result")){
+        } else if(activity_str.equals("Search_result")){
             this.list=Search_result.getList();
         }else{
             Log.d("ttttt","找不到匹配的activity");
@@ -88,7 +88,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     * @parameter flag 是否进行了删除操作
     * */
     public void notifyAdapter(String activity) {
-        //在这里还没有体现出差别，等到代码实现后进行完善
         if (activity.equals("MainActivity")) {
             //如果进行了
             this.list=get_list(id);

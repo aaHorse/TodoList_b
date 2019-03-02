@@ -84,4 +84,12 @@ public class Search_result extends BaseActivity {
         adapterobj.refreshAll();
         super.onBackPressed();
     }
+
+    public static String getSearchText() {
+        return searchText;
+    }
+
+    public static void setSearchText(String searchText) {
+        Search_result.searchText = searchText;
+    }
 }

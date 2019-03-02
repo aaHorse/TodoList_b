@@ -48,9 +48,10 @@
         <activity
             android:name=".LitePal_general.Succeed"
             android:label="注册成功" />
-        <activity android:name=".MainActivity_2" />
+        <activity android:name=".MainActivity_2_1" />
         <activity android:name=".LitePal_general.Search_result" />
-        <activity android:name=".About"></activity>
+        <activity android:name=".About" />
+        <activity android:name=".MainActivity_2_2"></activity>
     </application>
 
 </manifest>

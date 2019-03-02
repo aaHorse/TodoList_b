@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 import com.example.zexiger.todolist_b.LitePal_general.Add_content;
 import com.example.zexiger.todolist_b.LitePal_general.Contents;
-import com.example.zexiger.todolist_b.MainActivity_2;
+import com.example.zexiger.todolist_b.MainActivity_2_1;
+import com.example.zexiger.todolist_b.MainActivity_2_2;
 import com.example.zexiger.todolist_b.R;
 import com.yanzhenjie.recyclerview.OnItemClickListener;
 import com.yanzhenjie.recyclerview.OnItemLongClickListener;
@@ -23,11 +24,7 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import org.litepal.crud.DataSupport;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static android.support.v7.widget.ListPopupWindow.MATCH_PARENT;
-import static com.example.zexiger.todolist_b.LitePal_general.Search_result.itemInit;
 import static org.litepal.crud.DataSupport.findAll;
 import static org.litepal.crud.DataSupport.findFirst;
 
@@ -91,14 +88,19 @@ public class ItemInit {
                 @Override
                 public void onItemLongClick(View itemView, int position) {
                     Toast.makeText(context,"长按按钮触动",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(context,MainActivity_2.class);
-                    intent.putExtra("id",id);
                     if(activity.equals("MainActivity")){
+                        Intent intent=new Intent(context,MainActivity_2_1.class);
+                        intent.putExtra("id",id);
                         intent.putExtra("activity","MainActivity");
+                        context.startActivity(intent);
                     }else if(activity.equals("Search_result")){
+                        Intent intent=new Intent(context,MainActivity_2_2.class);
+                        intent.putExtra("id",id);
                         intent.putExtra("activity","Search_result");
+                        context.startActivity(intent);
+                    }else{
+                        Toast.makeText(context,"ItemInit.java,页面跳转出问题",Toast.LENGTH_SHORT).show();
                     }
-                    context.startActivity(intent);
                 }
             });
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
