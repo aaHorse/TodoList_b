@@ -4,6 +4,6 @@
     <version value="1"/>
 
     <list>
-        <mapping class="com.example.zexiger.todolist_b.LitePal_general.Contents"/>
+        <mapping class="com.example.zexiger.todolist_b.general.Contents"/>
     </list>
 </litepal>

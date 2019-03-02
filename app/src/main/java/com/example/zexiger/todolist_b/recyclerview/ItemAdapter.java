@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zexiger.todolist_b.About;
-import com.example.zexiger.todolist_b.LitePal_general.Contents;
+import com.example.zexiger.todolist_b.activities.About;
 import com.example.zexiger.todolist_b.R;
 
 import java.util.List;

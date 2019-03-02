@@ -15,16 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FirstActivity">
+        <activity android:name=".activities.FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LitePal_general.Add_content" />
-        <activity android:name=".LitePal_general.Create_user" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.Add_content" />
+        <activity android:name=".activities.Create_user" />
 
         <!-- 注册SDKActivity -->
         <activity
@@ -46,12 +46,12 @@
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".LitePal_general.Succeed"
+            android:name=".activities.Succeed"
             android:label="注册成功" />
-        <activity android:name=".MainActivity_2_1" />
-        <activity android:name=".LitePal_general.Search_result" />
-        <activity android:name=".About" />
-        <activity android:name=".MainActivity_2_2"></activity>
+        <activity android:name=".activities.MainActivity_2_1" />
+        <activity android:name=".activities.Search_result" />
+        <activity android:name=".activities.About" />
+        <activity android:name=".activities.MainActivity_2_2"></activity>
     </application>
 
 </manifest>

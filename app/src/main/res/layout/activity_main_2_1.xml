@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/activity_main_2_1_fragment"
-        android:name="com.example.zexiger.todolist_b.DeleteFragment"
+        android:name="com.example.zexiger.todolist_b.fragment.DeleteFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
